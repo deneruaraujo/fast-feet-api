@@ -15,8 +15,8 @@
 
 
 ## Business Requirements
- - [] Only admin users can perform CRUD operations on orders.
  - [] Only admin users can perform CRUD operations on deliverymans.
+ - [] Only admin users can perform CRUD operations on orders.
  - [] Only admin users can perform CRUD operations on recipients.
  - [] To mark an order as delivered, a photo must be mandatory.
  - [] Only the deliveryman who picked up the order can mark it as delivered.

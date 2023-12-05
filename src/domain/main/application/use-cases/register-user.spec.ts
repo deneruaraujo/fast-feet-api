@@ -24,8 +24,6 @@ describe('Register User', () => {
       role: UserRole.Deliveryman,
     });
 
-    console.log(result.value.user);
-
     expect(result.isRight()).toBe(true);
     expect(result.value).toEqual({
       user: inMemoryUsersRepository.items[0],
