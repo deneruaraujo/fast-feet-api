@@ -66,8 +66,6 @@ describe('Register User', () => {
       role: UserRole.Deliveryman,
     });
 
-    console.log(result);
-
     expect(result.isLeft()).toBe(true);
     expect(result.value).toBeInstanceOf(UserAlreadyExistsError);
   });
