@@ -1,6 +1,6 @@
 ## Functional Requirements
  - [x] The application must have two types of users: deliveryman and/or admin.
- - [] It should be possible to log in with CPF and Password.
+ - [] It should be possible to log in with SSN and Password.
  - [x] CRUD operations must be available for deliverymans.
  - [] CRUD operations must be available for orders.
  - [] CRUD operations must be available for recipients.

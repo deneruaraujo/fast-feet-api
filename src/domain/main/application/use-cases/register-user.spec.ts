@@ -22,7 +22,7 @@ describe('Register User', () => {
   it('should be able to register a new user', async () => {
     const result = await sut.execute({
       name: 'John Doe',
-      cpf: '123-456-789-00',
+      ssn: '123-45-6789',
       password: '123456',
       role: UserRole.Deliveryman,
     });
@@ -36,7 +36,7 @@ describe('Register User', () => {
   it('Should hash user password upon registration', async () => {
     const result = await sut.execute({
       name: 'John Doe',
-      cpf: '123-456-789-00',
+      ssn: '123-45-6789',
       password: '123456',
       role: UserRole.Deliveryman,
     });
@@ -47,13 +47,13 @@ describe('Register User', () => {
     expect(inMemoryUsersRepository.items[0].password).toEqual(hashedPassword);
   });
 
-  it('Should not be able to register with the same CPF', async () => {
-    const cpf = '123-456-789-00';
+  it('Should not be able to register with the same ssn', async () => {
+    const ssn = '123-45-6789';
 
     await inMemoryUsersRepository.create(
       makeUser(
         {
-          cpf,
+          ssn,
         },
         new UniqueEntityId('user-01'),
       ),
@@ -61,7 +61,7 @@ describe('Register User', () => {
 
     const result = await sut.execute({
       name: 'John Doe',
-      cpf,
+      ssn,
       password: '123456',
       role: UserRole.Deliveryman,
     });

@@ -8,7 +8,7 @@ import { UsersRepository } from '../repositories/users-repository';
 interface EditUserUseCaseRequest {
   userId: string;
   name: string;
-  cpf: string;
+  ssn: string;
   password: string;
   role: UserRole;
 }
@@ -26,7 +26,7 @@ export class EditUserUseCase {
   async execute({
     userId,
     name,
-    cpf,
+    ssn,
     password,
     role,
   }: EditUserUseCaseRequest): Promise<EditUserUseCaseResponse> {
@@ -41,7 +41,7 @@ export class EditUserUseCase {
     }
 
     user.name = name;
-    user.cpf = cpf;
+    user.ssn = ssn;
     user.password = password;
     user.role = role;
 

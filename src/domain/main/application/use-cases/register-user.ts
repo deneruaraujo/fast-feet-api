@@ -7,7 +7,7 @@ import { UserAlreadyExistsError } from './errors/user-already-exists-error';
 
 interface RegisterUserUseCaseRequest {
   name: string;
-  cpf: string;
+  ssn: string;
   password: string;
   role: UserRole;
 }
@@ -27,21 +27,21 @@ export class RegisterUserUseCase {
 
   async execute({
     name,
-    cpf,
+    ssn,
     password,
     role,
   }: RegisterUserUseCaseRequest): Promise<RegisterUserUseCaseResponse> {
-    const userWithSameCPF = await this.usersRepository.findByCPF(cpf);
+    const userWithSameSSN = await this.usersRepository.findBySSN(ssn);
 
-    if (userWithSameCPF) {
-      return left(new UserAlreadyExistsError(cpf));
+    if (userWithSameSSN) {
+      return left(new UserAlreadyExistsError(ssn));
     }
 
     const hashedPassword = await this.hashGenerator.hash(password);
 
     const user = User.create({
       name,
-      cpf,
+      ssn,
       password: hashedPassword,
       role,
     });

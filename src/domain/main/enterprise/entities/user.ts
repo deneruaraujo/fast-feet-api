@@ -4,7 +4,7 @@ import { UniqueEntityId } from 'src/core/entities/unique-entity-id';
 
 export interface UserProps {
   name: string;
-  cpf: string;
+  ssn: string;
   password: string;
   role: UserRole;
 }
@@ -18,12 +18,12 @@ export class User extends Entity<UserProps> {
     this.props.name = name;
   }
 
-  get cpf() {
-    return this.props.cpf;
+  get ssn() {
+    return this.props.ssn;
   }
 
-  set cpf(cpf: string) {
-    this.props.cpf = cpf;
+  set ssn(ssn: string) {
+    this.props.ssn = ssn;
   }
 
   get password() {

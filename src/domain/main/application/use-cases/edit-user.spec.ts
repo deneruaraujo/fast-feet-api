@@ -30,7 +30,7 @@ describe('Edit User', () => {
     const result = await sut.execute({
       userId: 'user-01',
       name: 'New name',
-      cpf: '098-765-432-11',
+      ssn: '123-45-6789',
       password: 'newPassword123',
       role: UserRole.Deliveryman,
     });
@@ -54,7 +54,7 @@ describe('Edit User', () => {
     const result = await sut.execute({
       userId: 'user-01',
       name: 'New name',
-      cpf: '098-765-432-11',
+      ssn: '123-45-6789',
       password: 'newPassword123',
       role: UserRole.Deliveryman,
     });
@@ -76,7 +76,7 @@ describe('Edit User', () => {
     const result = await sut.execute({
       userId: 'user-02',
       name: 'New name',
-      cpf: '098-765-432-11',
+      ssn: '123-45-6789',
       password: 'newPassword123',
       role: UserRole.Deliveryman,
     });

@@ -10,7 +10,7 @@ export function makeUser(
   const user = User.create(
     {
       name: faker.person.fullName(),
-      cpf: '123-456-789-00',
+      ssn: '123-45-6789',
       password: faker.internet.password(),
       role: UserRole.Deliveryman,
       ...override,
