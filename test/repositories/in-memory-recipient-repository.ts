@@ -6,4 +6,14 @@ export class InMemoryRecipientRepository implements RecipientRepository {
   async create(recipient: Recipient) {
     this.items.push(recipient);
   }
+
+  async findById(id: string) {
+    const recipient = this.items.find((item) => item.id.toString() === id);
+
+    if (!recipient) {
+      return null;
+    }
+
+    return recipient;
+  }
 }
