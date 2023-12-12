@@ -1,5 +1,9 @@
 import { InMemoryRecipientRepository } from 'test/repositories/in-memory-recipient-repository';
 import { RegisterRecipientUseCase } from './register-recipient';
+import { makeUser } from 'test/factories/make-user';
+import { UniqueEntityId } from '@/core/entities/unique-entity-id';
+import { UserRole } from '@/core/enum/user-role.enum';
+import { NotAllowedError } from '@/core/errors/errors/not-allowed-error';
 
 let inMemoryRecipientRepository: InMemoryRecipientRepository;
 let sut: RegisterRecipientUseCase;
@@ -11,6 +15,13 @@ describe('Register Recipient', () => {
   });
 
   it('should be able to register a new recipient', async () => {
+    const user = makeUser(
+      {
+        role: UserRole.Admin,
+      },
+      new UniqueEntityId('user-01'),
+    );
+
     const result = await sut.execute({
       name: 'Jane Smith',
       state: 'ST',
@@ -18,11 +29,34 @@ describe('Register Recipient', () => {
       street: 'Oak Lane',
       number: '456',
       zipCode: '54321',
+      user: user,
     });
 
     expect(result.isRight()).toBe(true);
     expect(result.value).toEqual({
       recipient: inMemoryRecipientRepository.items[0],
     });
+  });
+
+  it('should not be able to register a new recipient without admin role', async () => {
+    const user = makeUser(
+      {
+        role: UserRole.Deliveryman,
+      },
+      new UniqueEntityId('user-01'),
+    );
+
+    const result = await sut.execute({
+      name: 'Jane Smith',
+      state: 'ST',
+      city: 'Anytown',
+      street: 'Oak Lane',
+      number: '456',
+      zipCode: '54321',
+      user: user,
+    });
+
+    expect(result.isLeft()).toBe(true);
+    expect(result.value).toBeInstanceOf(NotAllowedError);
   });
 });
