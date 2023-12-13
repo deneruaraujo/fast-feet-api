@@ -16,4 +16,10 @@ export class InMemoryRecipientRepository implements RecipientRepository {
 
     return recipient;
   }
+
+  async save(recipient: Recipient) {
+    const itemIndex = this.items.findIndex((item) => item.id === recipient.id);
+
+    this.items[itemIndex] = recipient;
+  }
 }

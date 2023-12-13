@@ -15,24 +15,48 @@ export class Recipient extends Entity<RecipientProps> {
     return this.props.name;
   }
 
+  set name(name: string) {
+    this.props.name = name;
+  }
+
   get state() {
     return this.props.state;
+  }
+
+  set state(state: string) {
+    this.props.state = state;
   }
 
   get city() {
     return this.props.city;
   }
 
+  set city(city: string) {
+    this.props.city = city;
+  }
+
   get street() {
     return this.props.street;
+  }
+
+  set street(street: string) {
+    this.props.street = street;
   }
 
   get number() {
     return this.props.number;
   }
 
+  set number(number: string) {
+    this.props.number = number;
+  }
+
   get zipCode() {
     return this.props.zipCode;
+  }
+
+  set zipCode(zipCode: string) {
+    this.props.zipCode = zipCode;
   }
 
   static create(props: RecipientProps, id?: UniqueEntityId) {
