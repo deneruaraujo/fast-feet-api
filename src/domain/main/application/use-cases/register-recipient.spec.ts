@@ -1,16 +1,16 @@
-import { InMemoryRecipientRepository } from 'test/repositories/in-memory-recipient-repository';
+import { InMemoryRecipientsRepository } from 'test/repositories/in-memory-recipients-repository';
 import { RegisterRecipientUseCase } from './register-recipient';
 import { makeUser } from 'test/factories/make-user';
 import { UniqueEntityId } from '@/core/entities/unique-entity-id';
 import { UserRole } from '@/core/enum/user-role.enum';
 import { NotAllowedError } from '@/core/errors/errors/not-allowed-error';
 
-let inMemoryRecipientRepository: InMemoryRecipientRepository;
+let inMemoryRecipientRepository: InMemoryRecipientsRepository;
 let sut: RegisterRecipientUseCase;
 
 describe('Register Recipient', () => {
   beforeEach(() => {
-    inMemoryRecipientRepository = new InMemoryRecipientRepository();
+    inMemoryRecipientRepository = new InMemoryRecipientsRepository();
     sut = new RegisterRecipientUseCase(inMemoryRecipientRepository);
   });
 

@@ -1,4 +1,4 @@
-import { InMemoryRecipientRepository } from 'test/repositories/in-memory-recipient-repository';
+import { InMemoryRecipientsRepository } from 'test/repositories/in-memory-recipients-repository';
 import { EditRecipientUseCase } from './edit-recipient';
 import { makeUser } from 'test/factories/make-user';
 import { UserRole } from '@/core/enum/user-role.enum';
@@ -7,12 +7,12 @@ import { makeRecipient } from 'test/factories/make-recipient';
 import { NotAllowedError } from '@/core/errors/errors/not-allowed-error';
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error';
 
-let inMemoryRecipientRepository: InMemoryRecipientRepository;
+let inMemoryRecipientRepository: InMemoryRecipientsRepository;
 let sut: EditRecipientUseCase;
 
 describe('Edit Recipient', () => {
   beforeEach(() => {
-    inMemoryRecipientRepository = new InMemoryRecipientRepository();
+    inMemoryRecipientRepository = new InMemoryRecipientsRepository();
 
     sut = new EditRecipientUseCase(inMemoryRecipientRepository);
   });

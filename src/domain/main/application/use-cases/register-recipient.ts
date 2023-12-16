@@ -1,6 +1,6 @@
 import { Either, left, right } from '@/core/either';
 import { Recipient } from '../../enterprise/entities/recipient';
-import { RecipientRepository } from '../repositories/recipient-repository';
+import { RecipientsRepository } from '../repositories/recipients-repository';
 import { NotAllowedError } from '@/core/errors/errors/not-allowed-error';
 import { User } from '../../enterprise/entities/user';
 import { UserRole } from '@/core/enum/user-role.enum';
@@ -23,7 +23,7 @@ type RegisterRecipientUseCaseResponse = Either<
 >;
 
 export class RegisterRecipientUseCase {
-  constructor(private recipientRepository: RecipientRepository) {}
+  constructor(private recipientRepository: RecipientsRepository) {}
 
   async execute({
     name,

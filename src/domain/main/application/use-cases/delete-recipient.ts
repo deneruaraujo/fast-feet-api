@@ -1,31 +1,28 @@
-import { Either, left, right } from '@/core/either';
 import { NotAllowedError } from '@/core/errors/errors/not-allowed-error';
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error';
-import { Recipient } from '../../enterprise/entities/recipient';
 import { RecipientsRepository } from '../repositories/recipients-repository';
+import { Either, left, right } from '@/core/either';
 import { UserRole } from '@/core/enum/user-role.enum';
 import { User } from '../../enterprise/entities/user';
 
-interface GetRecipientInfoUseCaseRequest {
-  user: User;
+interface DeleteRecipientUseCaseRequest {
   recipientId: string;
+  user: User;
 }
 
-type GetRecipientInfoUseCaseResponse = Either<
+type DeleteRecipientUseCaseResponse = Either<
   ResourceNotFoundError | NotAllowedError,
-  {
-    recipient: Recipient;
-  }
+  Record<string, never>
 >;
 
-export class GetRecipientInfoUseCase {
-  constructor(private recipientRepository: RecipientsRepository) {}
+export class DeleteRecipientUseCase {
+  constructor(private recipientsRepository: RecipientsRepository) {}
 
   async execute({
     recipientId,
     user,
-  }: GetRecipientInfoUseCaseRequest): Promise<GetRecipientInfoUseCaseResponse> {
-    const recipient = await this.recipientRepository.findById(recipientId);
+  }: DeleteRecipientUseCaseRequest): Promise<DeleteRecipientUseCaseResponse> {
+    const recipient = await this.recipientsRepository.findById(recipientId);
 
     if (!recipient) {
       return left(new ResourceNotFoundError());
@@ -35,8 +32,8 @@ export class GetRecipientInfoUseCase {
       return left(new NotAllowedError());
     }
 
-    return right({
-      recipient,
-    });
+    await this.recipientsRepository.delete(recipient);
+
+    return right({});
   }
 }

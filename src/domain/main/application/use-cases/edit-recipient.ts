@@ -3,7 +3,7 @@ import { User } from '../../enterprise/entities/user';
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error';
 import { NotAllowedError } from '@/core/errors/errors/not-allowed-error';
 import { Recipient } from '../../enterprise/entities/recipient';
-import { RecipientRepository } from '../repositories/recipient-repository';
+import { RecipientsRepository } from '../repositories/recipients-repository';
 import { UserRole } from '@/core/enum/user-role.enum';
 
 interface EditRecipientUseCaseRequest {
@@ -25,7 +25,7 @@ type EditRecipientUseCaseResponse = Either<
 >;
 
 export class EditRecipientUseCase {
-  constructor(private recipientRepository: RecipientRepository) {}
+  constructor(private recipientRepository: RecipientsRepository) {}
 
   async execute({
     recipientId,

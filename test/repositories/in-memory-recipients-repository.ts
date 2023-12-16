@@ -1,7 +1,7 @@
-import { RecipientRepository } from '@/domain/main/application/repositories/recipient-repository';
+import { RecipientsRepository } from '@/domain/main/application/repositories/recipients-repository';
 import { Recipient } from '@/domain/main/enterprise/entities/recipient';
 
-export class InMemoryRecipientRepository implements RecipientRepository {
+export class InMemoryRecipientsRepository implements RecipientsRepository {
   public items: Recipient[] = [];
   async create(recipient: Recipient) {
     this.items.push(recipient);
@@ -21,5 +21,11 @@ export class InMemoryRecipientRepository implements RecipientRepository {
     const itemIndex = this.items.findIndex((item) => item.id === recipient.id);
 
     this.items[itemIndex] = recipient;
+  }
+
+  async delete(recipient: Recipient) {
+    const itemIndex = this.items.findIndex((item) => item.id === recipient.id);
+
+    this.items.splice(itemIndex, 1);
   }
 }

@@ -50,6 +50,7 @@ describe('Delete User', () => {
 
     expect(result.isLeft()).toBe(true);
     expect(result.value).toBeInstanceOf(NotAllowedError);
+    expect(inMemoryUsersRepository.items).toHaveLength(1);
   });
 
   it('should not be able to delete a user that does not exist', async () => {
@@ -68,5 +69,6 @@ describe('Delete User', () => {
 
     expect(result.isLeft()).toBe(true);
     expect(result.value).toBeInstanceOf(ResourceNotFoundError);
+    expect(inMemoryUsersRepository.items).toHaveLength(1);
   });
 });

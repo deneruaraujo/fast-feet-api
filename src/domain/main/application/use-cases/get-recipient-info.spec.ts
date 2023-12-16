@@ -1,4 +1,4 @@
-import { InMemoryRecipientRepository } from 'test/repositories/in-memory-recipient-repository';
+import { InMemoryRecipientsRepository } from 'test/repositories/in-memory-recipients-repository';
 import { GetRecipientInfoUseCase } from './get-recipient-info';
 import { makeRecipient } from 'test/factories/make-recipient';
 import { UniqueEntityId } from '@/core/entities/unique-entity-id';
@@ -7,12 +7,12 @@ import { UserRole } from '@/core/enum/user-role.enum';
 import { NotAllowedError } from '@/core/errors/errors/not-allowed-error';
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error';
 
-let inMemoryRecipientRepository: InMemoryRecipientRepository;
+let inMemoryRecipientRepository: InMemoryRecipientsRepository;
 let sut: GetRecipientInfoUseCase;
 
 describe('Get Recipient Info Use Case', () => {
   beforeEach(() => {
-    inMemoryRecipientRepository = new InMemoryRecipientRepository();
+    inMemoryRecipientRepository = new InMemoryRecipientsRepository();
 
     sut = new GetRecipientInfoUseCase(inMemoryRecipientRepository);
   });
