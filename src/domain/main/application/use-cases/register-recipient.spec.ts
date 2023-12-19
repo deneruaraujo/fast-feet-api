@@ -29,6 +29,8 @@ describe('Register Recipient', () => {
       street: 'Oak Lane',
       number: '456',
       zipCode: '54321',
+      latitude: 35.8709495,
+      longitude: 137.9809247,
       user: user,
     });
 
@@ -53,6 +55,8 @@ describe('Register Recipient', () => {
       street: 'Oak Lane',
       number: '456',
       zipCode: '54321',
+      latitude: 35.8709495,
+      longitude: 137.9809247,
       user: user,
     });
 

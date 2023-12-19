@@ -17,6 +17,8 @@ export function makeRecipient(
       street: faker.location.street(),
       number: faker.location.buildingNumber(),
       zipCode: faker.location.zipCode(),
+      latitude: 35.8709495,
+      longitude: 137.9809247,
       ...override,
     },
     id,

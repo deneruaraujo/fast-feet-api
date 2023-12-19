@@ -12,6 +12,8 @@ interface RegisterRecipientUseCaseRequest {
   street: string;
   number: string;
   zipCode: string;
+  latitude: number;
+  longitude: number;
   user: User;
 }
 
@@ -32,6 +34,8 @@ export class RegisterRecipientUseCase {
     street,
     number,
     zipCode,
+    latitude,
+    longitude,
     user,
   }: RegisterRecipientUseCaseRequest): Promise<RegisterRecipientUseCaseResponse> {
     const recipient = Recipient.create({
@@ -41,6 +45,8 @@ export class RegisterRecipientUseCase {
       street,
       number,
       zipCode,
+      latitude,
+      longitude,
     });
 
     if (user.role !== UserRole.Admin) {

@@ -8,6 +8,8 @@ export interface RecipientProps {
   street: string;
   number: string;
   zipCode: string;
+  latitude: number;
+  longitude: number;
 }
 
 export class Recipient extends Entity<RecipientProps> {
@@ -57,6 +59,14 @@ export class Recipient extends Entity<RecipientProps> {
 
   set zipCode(zipCode: string) {
     this.props.zipCode = zipCode;
+  }
+
+  get latitude() {
+    return this.props.latitude;
+  }
+
+  get longitude() {
+    return this.props.longitude;
   }
 
   static create(props: RecipientProps, id?: UniqueEntityId) {
