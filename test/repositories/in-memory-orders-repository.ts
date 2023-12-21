@@ -9,4 +9,14 @@ export class InMemoryOrdersRepository implements OrdersRepository {
   async create(order: Order) {
     this.items.push(order);
   }
+
+  async findById(id: string) {
+    const order = this.items.find((item) => item.id.toString() === id);
+
+    if (!order) {
+      return null;
+    }
+
+    return order;
+  }
 }
