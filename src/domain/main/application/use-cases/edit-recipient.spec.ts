@@ -73,7 +73,7 @@ describe('Edit Recipient', () => {
     expect(result.value).toBeInstanceOf(ResourceNotFoundError);
   });
 
-  it('should not be able to edit without admin role', async () => {
+  it('should not be able to edit a recipient without admin role', async () => {
     const user = makeUser(
       {
         role: UserRole.Deliveryman,

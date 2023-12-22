@@ -5,7 +5,7 @@ import { Optional } from '@/core/types/optional';
 import { UniqueEntityId } from '@/core/entities/unique-entity-id';
 
 export interface OrderProps {
-  deliverymanId: UniqueEntityId;
+  deliverymanId: string;
   recipient: Recipient;
   isAvailableForPickup: boolean;
   hasBeenPickedUp: boolean;
@@ -25,24 +25,54 @@ export class Order extends AggregateRoot<OrderProps> {
     return this.props.deliverymanId;
   }
 
+  set deliverymanId(deliverymanId: string) {
+    this.props.deliverymanId = deliverymanId;
+    this.touch();
+  }
+
   get recipient() {
     return this.props.recipient;
+  }
+
+  set recipient(recipient: Recipient) {
+    this.props.recipient = recipient;
+    this.touch();
   }
 
   get isAvailableForPickup() {
     return this.props.isAvailableForPickup;
   }
 
+  set isAvailableForPickup(isAvailableForPickup: boolean) {
+    this.props.isAvailableForPickup = isAvailableForPickup;
+    this.touch();
+  }
+
   get hasBeenPickedUp() {
     return this.props.hasBeenPickedUp;
+  }
+
+  set hasBeenPickedUp(hasBeenPickedUp: boolean) {
+    this.props.hasBeenPickedUp = hasBeenPickedUp;
+    this.touch();
   }
 
   get hasBeenDelivered() {
     return this.props.hasBeenDelivered;
   }
 
+  set hasBeenDelivered(hasBeenDelivered: boolean) {
+    this.props.hasBeenDelivered = hasBeenDelivered;
+    this.touch();
+  }
+
   get hasBeenReturned() {
     return this.props.hasBeenReturned;
+  }
+
+  set hasBeenReturned(hasBeenReturned: boolean) {
+    this.props.hasBeenReturned = hasBeenReturned;
+    this.touch();
   }
 
   get attachments() {
