@@ -1,8 +1,8 @@
 ## Functional Requirements
- - [x] The application must have two types of users: deliveryman and/or admin.
+ - [x] The application must have two types of users: deliveryman or admin.
  - [] It should be possible to log in with SSN and Password.
  - [x] CRUD operations must be available for deliverymans.
- - [] CRUD operations must be available for orders.
+ - [x] CRUD operations must be available for orders.
  - [x] CRUD operations must be available for recipients.
  - [] It should be possible to mark an order as awaiting (available for pickup).
  - [] It should be possible to pick up an order.
@@ -16,7 +16,7 @@
 
 ## Business Requirements
  - [x] Only admin users can perform CRUD operations on deliverymans.
- - [] Only admin users can perform CRUD operations on orders.
+ - [x] Only admin users can perform CRUD operations on orders.
  - [x] Only admin users can perform CRUD operations on recipients.
  - [] To mark an order as delivered, a photo must be mandatory.
  - [] Only the deliveryman who picked up the order can mark it as delivered.
