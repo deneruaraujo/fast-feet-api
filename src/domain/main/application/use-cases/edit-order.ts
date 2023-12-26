@@ -12,7 +12,7 @@ import { UniqueEntityId } from '@/core/entities/unique-entity-id';
 
 interface EditOrderUseCaseRequest {
   orderId: string;
-  deliverymanId: string;
+  userId: string;
   isAvailableForPickup: boolean;
   hasBeenPickedUp: boolean;
   hasBeenDelivered: boolean;
@@ -36,7 +36,7 @@ export class EditOrderUseCase {
 
   async execute({
     orderId,
-    deliverymanId,
+    userId,
     isAvailableForPickup,
     hasBeenPickedUp,
     hasBeenDelivered,
@@ -70,7 +70,7 @@ export class EditOrderUseCase {
 
     orderAttachmentList.update(orderAttachments);
 
-    order.deliverymanId = deliverymanId;
+    order.userId = userId;
     order.isAvailableForPickup = isAvailableForPickup;
     order.hasBeenPickedUp = hasBeenPickedUp;
     order.hasBeenDelivered = hasBeenDelivered;

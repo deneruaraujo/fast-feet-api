@@ -5,7 +5,7 @@ import { Optional } from '@/core/types/optional';
 import { UniqueEntityId } from '@/core/entities/unique-entity-id';
 
 export interface OrderProps {
-  deliverymanId: string;
+  userId: string;
   recipient: Recipient;
   isAvailableForPickup: boolean;
   hasBeenPickedUp: boolean;
@@ -21,12 +21,12 @@ export class Order extends AggregateRoot<OrderProps> {
     this.props.updatedAt = new Date();
   }
 
-  get deliverymanId() {
-    return this.props.deliverymanId;
+  get userId() {
+    return this.props.userId;
   }
 
-  set deliverymanId(deliverymanId: string) {
-    this.props.deliverymanId = deliverymanId;
+  set userId(userId: string) {
+    this.props.userId = userId;
     this.touch();
   }
 

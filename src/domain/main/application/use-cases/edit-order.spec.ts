@@ -58,7 +58,7 @@ describe('Edit Order', () => {
 
     const result = await sut.execute({
       orderId: 'order-01',
-      deliverymanId: 'deliveryman-01',
+      userId: 'user-01',
       isAvailableForPickup: false,
       hasBeenPickedUp: false,
       hasBeenDelivered: false,
@@ -106,7 +106,7 @@ describe('Edit Order', () => {
 
     const result = await sut.execute({
       orderId: 'order-02',
-      deliverymanId: 'deliveryman-01',
+      userId: 'user-01',
       isAvailableForPickup: false,
       hasBeenPickedUp: false,
       hasBeenDelivered: false,
@@ -152,7 +152,7 @@ describe('Edit Order', () => {
 
     const result = await sut.execute({
       orderId: 'order-01',
-      deliverymanId: 'deliveryman-01',
+      userId: 'user-01',
       isAvailableForPickup: false,
       hasBeenPickedUp: false,
       hasBeenDelivered: false,

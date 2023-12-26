@@ -7,7 +7,7 @@ export function makeOrder(
 ) {
   const order = Order.create(
     {
-      deliverymanId: new UniqueEntityId(),
+      userId: new UniqueEntityId().toString(),
       isAvailableForPickup: false,
       hasBeenPickedUp: false,
       hasBeenDelivered: false,

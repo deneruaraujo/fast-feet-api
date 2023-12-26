@@ -32,7 +32,7 @@ describe('Create Order', () => {
     const recipient = makeRecipient({}, new UniqueEntityId('recipient-01'));
 
     const result = await sut.execute({
-      deliverymanId: '1',
+      userId: '1',
       recipient: recipient,
       isAvailableForPickup: false,
       hasBeenPickedUp: false,
@@ -66,7 +66,7 @@ describe('Create Order', () => {
     const recipient = makeRecipient({}, new UniqueEntityId('recipient-01'));
 
     const result = await sut.execute({
-      deliverymanId: '1',
+      userId: '1',
       recipient: recipient,
       isAvailableForPickup: false,
       hasBeenPickedUp: false,

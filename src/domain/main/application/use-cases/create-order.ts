@@ -10,7 +10,7 @@ import { UserRole } from '@/core/enum/user-role.enum';
 import { NotAllowedError } from '@/core/errors/errors/not-allowed-error';
 
 interface CreateOrderUseCaseRequest {
-  deliverymanId: string;
+  userId: string;
   recipient: Recipient;
   isAvailableForPickup: boolean;
   hasBeenPickedUp: boolean;
@@ -31,7 +31,7 @@ export class CreateOrderUseCase {
   constructor(private ordersRepository: OrdersRepository) {}
 
   async execute({
-    deliverymanId,
+    userId,
     recipient,
     isAvailableForPickup,
     hasBeenPickedUp,
@@ -41,7 +41,7 @@ export class CreateOrderUseCase {
     user,
   }: CreateOrderUseCaseRequest): Promise<CreateOrderUseCaseResponse> {
     const order = Order.create({
-      deliverymanId: new UniqueEntityId(deliverymanId),
+      userId,
       recipient,
       isAvailableForPickup,
       hasBeenPickedUp,

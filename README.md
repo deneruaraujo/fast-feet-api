@@ -4,8 +4,8 @@
  - [x] CRUD operations must be available for deliverymans.
  - [x] CRUD operations must be available for orders.
  - [x] CRUD operations must be available for recipients.
- - [] It should be possible to mark an order as awaiting (available for pickup).
- - [] It should be possible to pick up an order.
+ - [x] It should be possible to mark an order as awaiting (available for pickup).
+ - [x] It should be possible to pick up an order.
  - [] It should be possible to mark an order as delivered.
  - [] It should be possible to mark an order as returned.
  - [] It should be possible to list orders with delivery addresses near the deliveryman's location.
