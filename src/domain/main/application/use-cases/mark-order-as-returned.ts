@@ -1,37 +1,42 @@
 import { Either, left, right } from '@/core/either';
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error';
+import { NotAllowedError } from '@/core/errors/errors/not-allowed-error';
 import { Order } from '../../enterprise/entities/order';
 import { OrdersRepository } from '../repositories/orders-repository';
 
-interface MarkOrderAsPickedUpUseCaseRequest {
+interface MarkOrderAsReturnedUseCaseRequest {
   userId: string;
   orderId: string;
-  hasBeenPickedUp: boolean;
+  hasBeenReturned: boolean;
 }
 
-type MarkOrderAsPickedUpUseCaseResponse = Either<
-  ResourceNotFoundError,
+type MarkOrderAsReturnedUseCaseResponse = Either<
+  ResourceNotFoundError | NotAllowedError,
   {
     order: Order;
   }
 >;
 
-export class MarkOrderAsPickedUpUseCase {
+export class MarkOrderAsReturnedUseCase {
   constructor(private ordersRepository: OrdersRepository) {}
 
   async execute({
     userId,
     orderId,
-    hasBeenPickedUp,
-  }: MarkOrderAsPickedUpUseCaseRequest): Promise<MarkOrderAsPickedUpUseCaseResponse> {
+    hasBeenReturned,
+  }: MarkOrderAsReturnedUseCaseRequest): Promise<MarkOrderAsReturnedUseCaseResponse> {
     const order = await this.ordersRepository.findById(orderId);
 
     if (!order) {
       return left(new ResourceNotFoundError());
     }
 
+    if (userId !== order.userId.toString()) {
+      return left(new NotAllowedError());
+    }
+
     order.userId = userId;
-    order.hasBeenPickedUp = hasBeenPickedUp;
+    order.hasBeenReturned = hasBeenReturned;
 
     await this.ordersRepository.save(order);
 
