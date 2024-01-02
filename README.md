@@ -6,7 +6,7 @@
  - [x] CRUD operations must be available for recipients.
  - [x] It should be possible to mark an order as awaiting (available for pickup).
  - [x] It should be possible to pick up an order.
- - [] It should be possible to mark an order as delivered.
+ - [x] It should be possible to mark an order as delivered.
  - [x] It should be possible to mark an order as returned.
  - [] It should be possible to list orders with delivery addresses near the deliveryman's location.
  - [x] It should be possible to change a user's password.
@@ -18,8 +18,8 @@
  - [x] Only admin users can perform CRUD operations on deliverymans.
  - [x] Only admin users can perform CRUD operations on orders.
  - [x] Only admin users can perform CRUD operations on recipients.
- - [] To mark an order as delivered, a photo must be mandatory.
- - [] Only the deliveryman who picked up the order can mark it as delivered.
+ - [x] To mark an order as delivered, a photo must be mandatory.
+ - [x] Only the deliveryman who picked up the order can mark it as delivered.
  - [x] Only the admin can change a user's password.
  - [] A deliveryman should not be able to list the orders of another deliveryman.
 
