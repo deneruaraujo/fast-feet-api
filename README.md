@@ -8,7 +8,7 @@
  - [x] It should be possible to pick up an order.
  - [x] It should be possible to mark an order as delivered.
  - [x] It should be possible to mark an order as returned.
- - [] It should be possible to list orders with delivery addresses near the deliveryman's location.
+ - [x] It should be possible to list orders with delivery addresses near the deliveryman's location.
  - [x] It should be possible to change a user's password.
  - [] It should be possible to list a user's deliveries.
  - [] Recipients should be notified of any changes in the order status.
@@ -21,7 +21,7 @@
  - [x] To mark an order as delivered, a photo must be mandatory.
  - [x] Only the deliveryman who picked up the order can mark it as delivered.
  - [x] Only the admin can change a user's password.
- - [] A deliveryman should not be able to list the orders of another deliveryman.
+ - [x] A deliveryman should not be able to list the orders of another deliveryman.
 
  ## Non-functional Requirements
 - [x] Password must be encrypted;

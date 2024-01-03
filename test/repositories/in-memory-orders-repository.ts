@@ -1,6 +1,11 @@
+import { PaginationParams } from '@/core/repositories/pagination-params';
 import { OrderAttachmentsRepository } from '@/domain/main/application/repositories/order-attachments-repository';
-import { OrdersRepository } from '@/domain/main/application/repositories/orders-repository';
+import {
+  FindManyNearbyParams,
+  OrdersRepository,
+} from '@/domain/main/application/repositories/orders-repository';
 import { Order } from '@/domain/main/enterprise/entities/order';
+import { getDistanceBetweenCoordinates } from 'test/utils/get-distance-between-coordinates';
 
 export class InMemoryOrdersRepository implements OrdersRepository {
   public items: Order[] = [];
@@ -32,5 +37,24 @@ export class InMemoryOrdersRepository implements OrdersRepository {
     }
 
     return order;
+  }
+
+  async findManyNearby(
+    params: FindManyNearbyParams,
+    { page }: PaginationParams,
+  ) {
+    return this.items
+      .filter((item) => {
+        const distance = getDistanceBetweenCoordinates(
+          { latitude: params.latitude, longitude: params.longitude },
+          {
+            latitude: item.recipient.latitude,
+            longitude: item.recipient.longitude,
+          },
+        );
+
+        return distance < 10;
+      })
+      .slice((page - 1) * 20, page * 20);
   }
 }
