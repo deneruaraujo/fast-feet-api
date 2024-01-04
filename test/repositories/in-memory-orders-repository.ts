@@ -55,6 +55,14 @@ export class InMemoryOrdersRepository implements OrdersRepository {
 
         return distance < 10;
       })
-      .slice((page - 1) * 20, page * 20);
+      .slice((page - 1) * 20, page * 20); // 20 items per page;
+  }
+
+  async findManyByUserId(userId: string, { page }: PaginationParams) {
+    const orders = this.items
+      .filter((item) => item.userId === userId)
+      .slice((page - 1) * 20, page * 20); // 20 items per page;
+
+    return orders;
   }
 }

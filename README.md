@@ -10,7 +10,7 @@
  - [x] It should be possible to mark an order as returned.
  - [x] It should be possible to list orders with delivery addresses near the deliveryman's location.
  - [x] It should be possible to change a user's password.
- - [] It should be possible to list a user's deliveries.
+ - [x] It should be possible to list a user's deliveries.
  - [] Recipients should be notified of any changes in the order status.
 
 
@@ -26,4 +26,4 @@
  ## Non-functional Requirements
 - [x] Password must be encrypted;
 - [] Users must be identified by a JWT;
-- [] All data lists must be paginated with 40 items per page.
+- [x] All data lists must be paginated with 20 items per page.

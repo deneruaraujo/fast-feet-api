@@ -15,4 +15,8 @@ export interface OrdersRepository {
     params: FindManyNearbyParams,
     paginationParams: PaginationParams,
   ): Promise<Order[] | null>;
+  findManyByUserId(
+    userId: string,
+    paginationParams: PaginationParams,
+  ): Promise<Order[] | null>;
 }
