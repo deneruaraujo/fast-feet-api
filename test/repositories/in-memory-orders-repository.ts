@@ -1,3 +1,4 @@
+import { DomainEvents } from '@/core/events/domain-events';
 import { PaginationParams } from '@/core/repositories/pagination-params';
 import { OrderAttachmentsRepository } from '@/domain/main/application/repositories/order-attachments-repository';
 import {
@@ -13,12 +14,16 @@ export class InMemoryOrdersRepository implements OrdersRepository {
   constructor(private orderAttachmentsRepository: OrderAttachmentsRepository) {}
   async create(order: Order) {
     this.items.push(order);
+
+    DomainEvents.dispatchEventsForAggregate(order.id);
   }
 
   async save(order: Order) {
     const itemIndex = this.items.findIndex((item) => item.id === order.id);
 
     this.items[itemIndex] = order;
+
+    DomainEvents.dispatchEventsForAggregate(order.id);
   }
 
   async delete(order: Order) {

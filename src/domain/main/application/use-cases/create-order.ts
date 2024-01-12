@@ -11,6 +11,7 @@ import { NotAllowedError } from '@/core/errors/errors/not-allowed-error';
 
 interface CreateOrderUseCaseRequest {
   userId: string;
+  name: string;
   recipient: Recipient;
   isAvailableForPickup: boolean;
   hasBeenPickedUp: boolean;
@@ -32,6 +33,7 @@ export class CreateOrderUseCase {
 
   async execute({
     userId,
+    name,
     recipient,
     isAvailableForPickup,
     hasBeenPickedUp,
@@ -42,6 +44,7 @@ export class CreateOrderUseCase {
   }: CreateOrderUseCaseRequest): Promise<CreateOrderUseCaseResponse> {
     const order = Order.create({
       userId,
+      name,
       recipient,
       isAvailableForPickup,
       hasBeenPickedUp,

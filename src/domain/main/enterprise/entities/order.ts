@@ -3,9 +3,11 @@ import { OrderAttachmentList } from './order-attachment-list';
 import { Recipient } from './recipient';
 import { Optional } from '@/core/types/optional';
 import { UniqueEntityId } from '@/core/entities/unique-entity-id';
+import { MarkedAsPickedUpEvent } from '../events/marked-as-picked-up-event';
 
 export interface OrderProps {
   userId: string;
+  name: string;
   recipient: Recipient;
   isAvailableForPickup: boolean;
   hasBeenPickedUp: boolean;
@@ -27,6 +29,15 @@ export class Order extends AggregateRoot<OrderProps> {
 
   set userId(userId: string) {
     this.props.userId = userId;
+    this.touch();
+  }
+
+  get name() {
+    return this.props.name;
+  }
+
+  set name(name: string) {
+    this.props.name = name;
     this.touch();
   }
 
@@ -53,6 +64,10 @@ export class Order extends AggregateRoot<OrderProps> {
   }
 
   set hasBeenPickedUp(hasBeenPickedUp: boolean) {
+    if (hasBeenPickedUp && hasBeenPickedUp !== this.props.hasBeenPickedUp) {
+      this.addDomainEvent(new MarkedAsPickedUpEvent(this, hasBeenPickedUp));
+    }
+
     this.props.hasBeenPickedUp = hasBeenPickedUp;
     this.touch();
   }

@@ -33,6 +33,7 @@ describe('Create Order', () => {
 
     const result = await sut.execute({
       userId: '1',
+      name: 'name',
       recipient: recipient,
       isAvailableForPickup: false,
       hasBeenPickedUp: false,
@@ -67,6 +68,7 @@ describe('Create Order', () => {
 
     const result = await sut.execute({
       userId: '1',
+      name: 'name',
       recipient: recipient,
       isAvailableForPickup: false,
       hasBeenPickedUp: false,

@@ -35,6 +35,7 @@ describe('Edit Order', () => {
 
     const newOrder = makeOrder(
       {
+        name: 'new name',
         isAvailableForPickup: true,
         hasBeenPickedUp: true,
         hasBeenDelivered: true,
@@ -59,6 +60,7 @@ describe('Edit Order', () => {
     const result = await sut.execute({
       orderId: 'order-01',
       userId: 'user-01',
+      name: 'new name',
       isAvailableForPickup: false,
       hasBeenPickedUp: false,
       hasBeenDelivered: false,
@@ -107,6 +109,7 @@ describe('Edit Order', () => {
     const result = await sut.execute({
       orderId: 'order-02',
       userId: 'user-01',
+      name: 'new name',
       isAvailableForPickup: false,
       hasBeenPickedUp: false,
       hasBeenDelivered: false,
@@ -153,6 +156,7 @@ describe('Edit Order', () => {
     const result = await sut.execute({
       orderId: 'order-01',
       userId: 'user-01',
+      name: 'new name',
       isAvailableForPickup: false,
       hasBeenPickedUp: false,
       hasBeenDelivered: false,
