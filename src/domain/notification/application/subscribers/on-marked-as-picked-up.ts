@@ -31,7 +31,7 @@ export class OnMarkedAsPickedUp implements EventHandler {
         recipientId: order.recipient.id.toString(),
         title: 'Your order has been picked up!',
         content: `The order "${order.name
-          .substring(0, 20)
+          .substring(0, 30)
           .concat('...')}" has been picked up and it will soon be delivered!`,
       });
     }

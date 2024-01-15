@@ -1,10 +1,10 @@
-import { DomainEvents } from '@/core/events/domain-events';
 import { EventHandler } from '@/core/events/event-handler';
 import { OrdersRepository } from '@/domain/main/application/repositories/orders-repository';
-import { MarkedAsDeliveredEvent } from '@/domain/main/enterprise/events/marked-as-delivered-event';
 import { SendNotificationUseCase } from '../use-cases/send-notification';
+import { DomainEvents } from '@/core/events/domain-events';
+import { MarkedAsReturnedEvent } from '@/domain/main/enterprise/events/marked-as-returned-event';
 
-export class OnMarkedAsDelivered implements EventHandler {
+export class OnMarkedAsReturned implements EventHandler {
   constructor(
     private ordersRepository: OrdersRepository,
     private sendNotification: SendNotificationUseCase,
@@ -14,14 +14,14 @@ export class OnMarkedAsDelivered implements EventHandler {
 
   setupSubscriptions(): void {
     DomainEvents.register(
-      this.sendMarkedAsDeliveredNotification.bind(this),
-      MarkedAsDeliveredEvent.name,
+      this.sendMarkedAsReturnedNotification.bind(this),
+      MarkedAsReturnedEvent.name,
     );
   }
 
-  private async sendMarkedAsDeliveredNotification({
+  private async sendMarkedAsReturnedNotification({
     order,
-  }: MarkedAsDeliveredEvent) {
+  }: MarkedAsReturnedEvent) {
     const markedOrder = await this.ordersRepository.findById(
       order.id.toString(),
     );
@@ -29,10 +29,10 @@ export class OnMarkedAsDelivered implements EventHandler {
     if (markedOrder) {
       await this.sendNotification.execute({
         recipientId: order.recipient.id.toString(),
-        title: 'Your order has been delivered!',
+        title: 'Your order has been returned!',
         content: `The order "${order.name
           .substring(0, 30)
-          .concat('...')}" has been delivered!`,
+          .concat('...')}" has been returned!`,
       });
     }
   }

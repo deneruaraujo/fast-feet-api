@@ -8,7 +8,7 @@ import {
   SendNotificationUseCaseResponse,
 } from '../use-cases/send-notification';
 import { SpyInstance } from 'vitest';
-import { OnMarkedAsDelivered } from './on-marked-as-delivered';
+import { OnMarkedAsReturned } from './on-marked-as-returned';
 import { makeRecipient } from 'test/factories/make-recipient';
 import { makeOrder } from 'test/factories/make-order';
 import { waitFor } from 'test/utils/wait-for';
@@ -24,7 +24,7 @@ let sendNotificationExecuteSpy: SpyInstance<
   Promise<SendNotificationUseCaseResponse>
 >;
 
-describe('On Order Marked As Delivered', () => {
+describe('On Order Marked As Returned', () => {
   beforeEach(() => {
     inMemoryRecipientsRepository = new InMemoryRecipientsRepository();
 
@@ -43,17 +43,17 @@ describe('On Order Marked As Delivered', () => {
 
     sendNotificationExecuteSpy = vi.spyOn(sendNotificationUseCase, 'execute');
 
-    new OnMarkedAsDelivered(inMemoryOrdersRepository, sendNotificationUseCase);
+    new OnMarkedAsReturned(inMemoryOrdersRepository, sendNotificationUseCase);
   });
 
-  it('should be able to send a notification when order is marked as delivered', async () => {
+  it('should be able to send a notification when order is marked as returned', async () => {
     const recipient = makeRecipient();
-    const order = makeOrder({ hasBeenDelivered: false, recipient: recipient });
+    const order = makeOrder({ hasBeenReturned: false, recipient: recipient });
 
     inMemoryRecipientsRepository.create(recipient);
     inMemoryOrdersRepository.create(order);
 
-    order.hasBeenDelivered = true;
+    order.hasBeenReturned = true;
 
     inMemoryOrdersRepository.save(order);
 

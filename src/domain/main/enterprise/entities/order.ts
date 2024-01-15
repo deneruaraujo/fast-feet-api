@@ -5,6 +5,7 @@ import { Optional } from '@/core/types/optional';
 import { UniqueEntityId } from '@/core/entities/unique-entity-id';
 import { MarkedAsPickedUpEvent } from '../events/marked-as-picked-up-event';
 import { MarkedAsDeliveredEvent } from '../events/marked-as-delivered-event';
+import { MarkedAsReturnedEvent } from '../events/marked-as-returned-event';
 
 export interface OrderProps {
   userId: string;
@@ -91,6 +92,10 @@ export class Order extends AggregateRoot<OrderProps> {
   }
 
   set hasBeenReturned(hasBeenReturned: boolean) {
+    if (hasBeenReturned && hasBeenReturned !== this.props.hasBeenReturned) {
+      this.addDomainEvent(new MarkedAsReturnedEvent(this, hasBeenReturned));
+    }
+
     this.props.hasBeenReturned = hasBeenReturned;
     this.touch();
   }
