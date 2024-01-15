@@ -4,6 +4,7 @@ import { Recipient } from './recipient';
 import { Optional } from '@/core/types/optional';
 import { UniqueEntityId } from '@/core/entities/unique-entity-id';
 import { MarkedAsPickedUpEvent } from '../events/marked-as-picked-up-event';
+import { MarkedAsDeliveredEvent } from '../events/marked-as-delivered-event';
 
 export interface OrderProps {
   userId: string;
@@ -77,6 +78,10 @@ export class Order extends AggregateRoot<OrderProps> {
   }
 
   set hasBeenDelivered(hasBeenDelivered: boolean) {
+    if (hasBeenDelivered && hasBeenDelivered !== this.props.hasBeenDelivered) {
+      this.addDomainEvent(new MarkedAsDeliveredEvent(this, hasBeenDelivered));
+    }
+
     this.props.hasBeenDelivered = hasBeenDelivered;
     this.touch();
   }
