@@ -1,0 +1,73 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
+model User {
+  id       String   @id @default(uuid())
+  name     String
+  ssn      String   @unique
+  password String
+  role     UserRole @default(USER)
+
+  Order Order[]
+
+  @@map("users")
+}
+
+model Recipient {
+  id        String  @id @default(uuid())
+  name      String
+  state     String
+  city      String
+  number    String
+  zipCode   String  @map("zip_code")
+  latitude  Decimal
+  longitude Decimal
+
+  Order Order[]
+
+  @@map("recipients")
+}
+
+model Order {
+  id                   String    @id @default(uuid())
+  userId               String    @map("user_id")
+  name                 String
+  recipientId          String
+  isAvailableForPickup Boolean   @map("is_available_for_pickup")
+  hasBeenPickedUp      Boolean   @map("has_been_picked_up")
+  hasBeenDelivered     Boolean   @map("has_been_delivered")
+  hasBeenReturned      Boolean   @map("has_been_returned")
+  createdAt            DateTime  @default(now()) @map("created_at")
+  updatedAt            DateTime? @updatedAt @map("updated_at")
+
+  user       User         @relation(fields: [userId], references: [id])
+  recipient  Recipient    @relation(fields: [recipientId], references: [id])
+  Attachment Attachment[]
+
+  @@map("orders")
+}
+
+model Attachment {
+  id      String @id @default(uuid())
+  title   String
+  url     String
+  orderId String @map("order_id")
+
+  order Order @relation(fields: [orderId], references: [id])
+
+  @@map("attachments")
+}
