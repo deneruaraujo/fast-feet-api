@@ -11,7 +11,7 @@
  - [x] It should be possible to list orders with delivery addresses near the deliveryman's location.
  - [x] It should be possible to change a user's password.
  - [x] It should be possible to list a user's deliveries.
- - [] Recipients should be notified of any changes in the order status.
+ - [x] Recipients should be notified of any changes in the order status.
 
 
 ## Business Requirements
