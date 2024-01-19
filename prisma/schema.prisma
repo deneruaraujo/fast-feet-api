@@ -11,7 +11,7 @@ datasource db {
 }
 
 enum UserRole {
-  USER
+  DELIVERYMAN
   ADMIN
 }
 
@@ -20,7 +20,7 @@ model User {
   name     String
   ssn      String   @unique
   password String
-  role     UserRole @default(USER)
+  role     UserRole @default(DELIVERYMAN)
 
   Order Order[]
 
