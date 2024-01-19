@@ -4,6 +4,7 @@ import { User } from '../../enterprise/entities/user';
 import { UsersRepository } from '../repositories/users-repository';
 import { NotAllowedError } from '@/core/errors/errors/not-allowed-error';
 import { UserRole } from '@/core/enum/user-role.enum';
+import { Injectable } from '@nestjs/common';
 
 interface GetUserInfoUseCaseRequest {
   userId: string;
@@ -15,7 +16,7 @@ type GetUserInfoUseCaseResponse = Either<
     user: User;
   }
 >;
-
+@Injectable()
 export class GetUserInfoUseCase {
   constructor(private userRepository: UsersRepository) {}
 

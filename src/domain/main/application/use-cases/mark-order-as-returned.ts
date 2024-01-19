@@ -3,6 +3,7 @@ import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-e
 import { NotAllowedError } from '@/core/errors/errors/not-allowed-error';
 import { Order } from '../../enterprise/entities/order';
 import { OrdersRepository } from '../repositories/orders-repository';
+import { Injectable } from '@nestjs/common';
 
 interface MarkOrderAsReturnedUseCaseRequest {
   userId: string;
@@ -16,7 +17,7 @@ type MarkOrderAsReturnedUseCaseResponse = Either<
     order: Order;
   }
 >;
-
+@Injectable()
 export class MarkOrderAsReturnedUseCase {
   constructor(private ordersRepository: OrdersRepository) {}
 

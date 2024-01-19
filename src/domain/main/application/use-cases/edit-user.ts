@@ -4,6 +4,7 @@ import { NotAllowedError } from '@/core/errors/errors/not-allowed-error';
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error';
 import { User } from '../../enterprise/entities/user';
 import { UsersRepository } from '../repositories/users-repository';
+import { Injectable } from '@nestjs/common';
 
 interface EditUserUseCaseRequest {
   userId: string;
@@ -20,6 +21,7 @@ type EditUserUseCaseResponse = Either<
   }
 >;
 
+@Injectable()
 export class EditUserUseCase {
   constructor(private usersRepository: UsersRepository) {}
 

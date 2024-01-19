@@ -5,6 +5,7 @@ import { OrdersRepository } from '../repositories/orders-repository';
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error';
 import { User } from '../../enterprise/entities/user';
 import { UserRole } from '@/core/enum/user-role.enum';
+import { Injectable } from '@nestjs/common';
 
 interface GetOrderInfoUseCaseRequest {
   orderId: string;
@@ -17,7 +18,7 @@ type GetOrderInfoUseCaseResponse = Either<
     order: Order;
   }
 >;
-
+@Injectable()
 export class GetOrderInfoUseCase {
   constructor(private ordersRepository: OrdersRepository) {}
 

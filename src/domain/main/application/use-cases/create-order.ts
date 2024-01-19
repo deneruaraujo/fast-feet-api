@@ -8,6 +8,7 @@ import { OrderAttachmentList } from '../../enterprise/entities/order-attachment-
 import { User } from '../../enterprise/entities/user';
 import { UserRole } from '@/core/enum/user-role.enum';
 import { NotAllowedError } from '@/core/errors/errors/not-allowed-error';
+import { Injectable } from '@nestjs/common';
 
 interface CreateOrderUseCaseRequest {
   userId: string;
@@ -27,7 +28,7 @@ type CreateOrderUseCaseResponse = Either<
     order: Order;
   }
 >;
-
+@Injectable()
 export class CreateOrderUseCase {
   constructor(private ordersRepository: OrdersRepository) {}
 

@@ -8,6 +8,7 @@ import { OrderAttachmentList } from '../../enterprise/entities/order-attachment-
 import { OrderAttachment } from '../../enterprise/entities/order-attachment';
 import { UniqueEntityId } from '@/core/entities/unique-entity-id';
 import { AttachmentRequiredError } from './errors/attachment-required-error';
+import { Injectable } from '@nestjs/common';
 
 interface MarkOrderAsDeliveredUseCaseRequest {
   userId: string;
@@ -22,7 +23,7 @@ type MarkOrderAsDeliveredUseCaseResponse = Either<
     order: Order;
   }
 >;
-
+@Injectable()
 export class MarkOrderAsDeliveredUseCase {
   constructor(
     private ordersRepository: OrdersRepository,

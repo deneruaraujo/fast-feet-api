@@ -2,6 +2,7 @@ import { Either, left, right } from '@/core/either';
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error';
 import { Order } from '../../enterprise/entities/order';
 import { OrdersRepository } from '../repositories/orders-repository';
+import { Injectable } from '@nestjs/common';
 
 interface MarkOrderAsPickedUpUseCaseRequest {
   userId: string;
@@ -15,7 +16,7 @@ type MarkOrderAsPickedUpUseCaseResponse = Either<
     order: Order;
   }
 >;
-
+@Injectable()
 export class MarkOrderAsPickedUpUseCase {
   constructor(private ordersRepository: OrdersRepository) {}
 

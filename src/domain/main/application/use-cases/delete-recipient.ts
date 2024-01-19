@@ -4,6 +4,7 @@ import { RecipientsRepository } from '../repositories/recipients-repository';
 import { Either, left, right } from '@/core/either';
 import { UserRole } from '@/core/enum/user-role.enum';
 import { User } from '../../enterprise/entities/user';
+import { Injectable } from '@nestjs/common';
 
 interface DeleteRecipientUseCaseRequest {
   recipientId: string;
@@ -14,7 +15,7 @@ type DeleteRecipientUseCaseResponse = Either<
   ResourceNotFoundError | NotAllowedError,
   Record<string, never>
 >;
-
+@Injectable()
 export class DeleteRecipientUseCase {
   constructor(private recipientsRepository: RecipientsRepository) {}
 

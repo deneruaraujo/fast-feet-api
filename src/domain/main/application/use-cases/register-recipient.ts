@@ -4,6 +4,7 @@ import { RecipientsRepository } from '../repositories/recipients-repository';
 import { NotAllowedError } from '@/core/errors/errors/not-allowed-error';
 import { User } from '../../enterprise/entities/user';
 import { UserRole } from '@/core/enum/user-role.enum';
+import { Injectable } from '@nestjs/common';
 
 interface RegisterRecipientUseCaseRequest {
   name: string;
@@ -23,7 +24,7 @@ type RegisterRecipientUseCaseResponse = Either<
     recipient: Recipient;
   }
 >;
-
+@Injectable()
 export class RegisterRecipientUseCase {
   constructor(private recipientRepository: RecipientsRepository) {}
 

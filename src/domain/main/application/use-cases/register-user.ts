@@ -4,6 +4,7 @@ import { User } from '../../enterprise/entities/user';
 import { UsersRepository } from '../repositories/users-repository';
 import { HashGenerator } from '../cryptography/hash-generator';
 import { UserAlreadyExistsError } from './errors/user-already-exists-error';
+import { Injectable } from '@nestjs/common';
 
 interface RegisterUserUseCaseRequest {
   name: string;
@@ -18,7 +19,7 @@ type RegisterUserUseCaseResponse = Either<
     user: User;
   }
 >;
-
+@Injectable()
 export class RegisterUserUseCase {
   constructor(
     private usersRepository: UsersRepository,

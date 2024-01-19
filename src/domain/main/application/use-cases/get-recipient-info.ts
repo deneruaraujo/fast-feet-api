@@ -5,6 +5,7 @@ import { Recipient } from '../../enterprise/entities/recipient';
 import { RecipientsRepository } from '../repositories/recipients-repository';
 import { UserRole } from '@/core/enum/user-role.enum';
 import { User } from '../../enterprise/entities/user';
+import { Injectable } from '@nestjs/common';
 
 interface GetRecipientInfoUseCaseRequest {
   user: User;
@@ -17,7 +18,7 @@ type GetRecipientInfoUseCaseResponse = Either<
     recipient: Recipient;
   }
 >;
-
+@Injectable()
 export class GetRecipientInfoUseCase {
   constructor(private recipientRepository: RecipientsRepository) {}
 

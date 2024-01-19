@@ -4,6 +4,7 @@ import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-e
 import { User } from '../../enterprise/entities/user';
 import { OrdersRepository } from '../repositories/orders-repository';
 import { UserRole } from '@/core/enum/user-role.enum';
+import { Injectable } from '@nestjs/common';
 
 interface DeleteOrderUseCaseRequest {
   orderId: string;
@@ -14,7 +15,7 @@ type DeleteOrderUseCaseResponse = Either<
   ResourceNotFoundError | NotAllowedError,
   Record<string, never>
 >;
-
+@Injectable()
 export class DeleteOrderUseCase {
   constructor(private ordersRepository: OrdersRepository) {}
 

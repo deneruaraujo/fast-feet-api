@@ -9,6 +9,7 @@ import { OrderAttachmentsRepository } from '../repositories/order-attachments-re
 import { OrderAttachmentList } from '../../enterprise/entities/order-attachment-list';
 import { OrderAttachment } from '../../enterprise/entities/order-attachment';
 import { UniqueEntityId } from '@/core/entities/unique-entity-id';
+import { Injectable } from '@nestjs/common';
 
 interface EditOrderUseCaseRequest {
   orderId: string;
@@ -28,7 +29,7 @@ type EditOrderUseCaseResponse = Either<
     order: Order;
   }
 >;
-
+@Injectable()
 export class EditOrderUseCase {
   constructor(
     private ordersRepository: OrdersRepository,

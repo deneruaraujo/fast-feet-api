@@ -5,6 +5,7 @@ import { NotAllowedError } from '@/core/errors/errors/not-allowed-error';
 import { Recipient } from '../../enterprise/entities/recipient';
 import { RecipientsRepository } from '../repositories/recipients-repository';
 import { UserRole } from '@/core/enum/user-role.enum';
+import { Injectable } from '@nestjs/common';
 
 interface EditRecipientUseCaseRequest {
   recipientId: string;
@@ -23,7 +24,7 @@ type EditRecipientUseCaseResponse = Either<
     recipient: Recipient;
   }
 >;
-
+@Injectable()
 export class EditRecipientUseCase {
   constructor(private recipientRepository: RecipientsRepository) {}
 
