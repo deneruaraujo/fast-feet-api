@@ -25,5 +25,5 @@
 
  ## Non-functional Requirements
 - [x] Password must be encrypted;
-- [] Users must be identified by a JWT;
+- [x] Users must be identified by a JWT;
 - [x] All data lists must be paginated with 20 items per page.
