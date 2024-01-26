@@ -5,8 +5,10 @@ import { NotAllowedError } from '@/core/errors/errors/not-allowed-error';
 import { User } from '../../enterprise/entities/user';
 import { UserRole } from '@/core/enum/user-role.enum';
 import { Injectable } from '@nestjs/common';
+import { UniqueEntityId } from '@/core/entities/unique-entity-id';
 
 interface RegisterRecipientUseCaseRequest {
+  userId: string;
   name: string;
   state: string;
   city: string;
@@ -29,6 +31,7 @@ export class RegisterRecipientUseCase {
   constructor(private recipientRepository: RecipientsRepository) {}
 
   async execute({
+    userId,
     name,
     state,
     city,
@@ -40,6 +43,7 @@ export class RegisterRecipientUseCase {
     user,
   }: RegisterRecipientUseCaseRequest): Promise<RegisterRecipientUseCaseResponse> {
     const recipient = Recipient.create({
+      userId: new UniqueEntityId(userId),
       name,
       state,
       city,

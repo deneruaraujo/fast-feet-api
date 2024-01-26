@@ -24,7 +24,7 @@ describe('Authenticate User', () => {
     );
   });
 
-  it('should be able to authenticate a student', async () => {
+  it('should be able to authenticate a user', async () => {
     const user = makeUser({
       ssn: '123-45-6789',
       password: await fakeHasher.hash('123456'),

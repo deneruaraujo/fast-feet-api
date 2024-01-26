@@ -2,6 +2,7 @@ import { Entity } from '@/core/entities/entity';
 import { UniqueEntityId } from '@/core/entities/unique-entity-id';
 
 export interface RecipientProps {
+  userId: UniqueEntityId;
   name: string;
   state: string;
   city: string;
@@ -13,6 +14,10 @@ export interface RecipientProps {
 }
 
 export class Recipient extends Entity<RecipientProps> {
+  get userId() {
+    return this.props.userId;
+  }
+
   get name() {
     return this.props.name;
   }

@@ -1,7 +1,7 @@
 import { UniqueEntityId } from '@/core/entities/unique-entity-id';
 import { UserRole } from '@/core/enum/user-role.enum';
 import { User, UserProps } from '@/domain/main/enterprise/entities/user';
-import { PrismaUserMapper } from '@/infra/database/prisma/mappers/prisma-sutdent-mapper';
+import { PrismaUserMapper } from '@/infra/database/prisma/mappers/prisma-user-mapper';
 import { PrismaService } from '@/infra/database/prisma/prisma.service';
 import { faker } from '@faker-js/faker';
 import { Injectable } from '@nestjs/common';
