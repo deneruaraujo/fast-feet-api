@@ -23,7 +23,6 @@ describe('Register Recipient', () => {
     );
 
     const result = await sut.execute({
-      userId: user.id.toString(),
       name: 'Jane Smith',
       state: 'ST',
       city: 'Anytown',
@@ -50,7 +49,6 @@ describe('Register Recipient', () => {
     );
 
     const result = await sut.execute({
-      userId: user.id.toString(),
       name: 'Jane Smith',
       state: 'ST',
       city: 'Anytown',

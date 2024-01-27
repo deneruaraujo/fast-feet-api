@@ -22,15 +22,13 @@ model User {
   password String
   role     UserRole @default(DELIVERYMAN)
 
-  Order     Order[]
-  Recipient Recipient[]
+  Order Order[]
 
   @@map("users")
 }
 
 model Recipient {
   id        String  @id @default(uuid())
-  userId    String  @map("user_id")
   name      String
   state     String
   city      String
@@ -41,7 +39,6 @@ model Recipient {
   longitude Decimal
 
   Order Order[]
-  user  User    @relation(fields: [userId], references: [id])
 
   @@map("recipients")
 }

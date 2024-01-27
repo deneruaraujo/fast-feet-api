@@ -7,6 +7,8 @@ import { AuthenticateController } from './controllers/authenticate.controller.e2
 import { AuthenticateUserUseCase } from '@/domain/main/application/use-cases/authenticate-user';
 import { CreateRecipientController } from './controllers/create-recipient.controller.e2e';
 import { RegisterRecipientUseCase } from '@/domain/main/application/use-cases/register-recipient';
+import { EditRecipientController } from './controllers/edit-recipient.controller.e2e';
+import { EditRecipientUseCase } from '@/domain/main/application/use-cases/edit-recipient';
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -14,11 +16,13 @@ import { RegisterRecipientUseCase } from '@/domain/main/application/use-cases/re
     CreateAccountController,
     AuthenticateController,
     CreateRecipientController,
+    EditRecipientController,
   ],
   providers: [
     RegisterUserUseCase,
     AuthenticateUserUseCase,
     RegisterRecipientUseCase,
+    EditRecipientUseCase,
   ],
 })
 export class HttpModule {}

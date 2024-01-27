@@ -49,10 +49,9 @@ export class CreateRecipientController {
       longitude,
       user,
     } = body;
-    const currentUserId = currentUser.sub;
+    const userId = currentUser.sub;
 
     const result = await this.createRecipient.execute({
-      userId: currentUserId,
       name,
       state,
       city,
@@ -61,12 +60,10 @@ export class CreateRecipientController {
       zipCode,
       latitude,
       longitude,
-      user,
+      user: { ...user, id: userId },
     });
 
     if (result.isLeft()) {
-      // const validationErrors = result.value;
-      // console.error('Validation Errors:', validationErrors);
       throw new BadRequestException();
     }
   }

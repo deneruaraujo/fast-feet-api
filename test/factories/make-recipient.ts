@@ -14,7 +14,6 @@ export function makeRecipient(
 ) {
   const recipient = Recipient.create(
     {
-      userId: new UniqueEntityId(),
       name: faker.person.fullName(),
       state: faker.location.state(),
       city: faker.location.city(),
