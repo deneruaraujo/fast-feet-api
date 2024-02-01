@@ -6,15 +6,22 @@ import { makeUser } from 'test/factories/make-user';
 import { UserRole } from '@/core/enum/user-role.enum';
 import { NotAllowedError } from '@/core/errors/errors/not-allowed-error';
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error';
+import { InMemoryUsersRepository } from 'test/repositories/in-memory-users-repository';
 
 let inMemoryRecipientRepository: InMemoryRecipientsRepository;
+let inMemoryUsersRepository: InMemoryUsersRepository;
+
 let sut: GetRecipientInfoUseCase;
 
 describe('Get Recipient Info Use Case', () => {
   beforeEach(() => {
     inMemoryRecipientRepository = new InMemoryRecipientsRepository();
+    inMemoryUsersRepository = new InMemoryUsersRepository();
 
-    sut = new GetRecipientInfoUseCase(inMemoryRecipientRepository);
+    sut = new GetRecipientInfoUseCase(
+      inMemoryRecipientRepository,
+      inMemoryUsersRepository,
+    );
   });
 
   it('should be able to get recipient info by id', async () => {
@@ -29,9 +36,11 @@ describe('Get Recipient Info Use Case', () => {
       new UniqueEntityId('user-01'),
     );
 
+    await inMemoryUsersRepository.create(user);
+
     const result = await sut.execute({
+      userId: 'user-01',
       recipientId: 'recipient-01',
-      user: user,
     });
 
     expect(result.isRight()).toBe(true);
@@ -49,9 +58,11 @@ describe('Get Recipient Info Use Case', () => {
       new UniqueEntityId('user-01'),
     );
 
+    await inMemoryUsersRepository.create(user);
+
     const result = await sut.execute({
+      userId: 'user-01',
       recipientId: 'recipient-02',
-      user: user,
     });
 
     expect(result.isLeft()).toBe(true);
@@ -70,9 +81,11 @@ describe('Get Recipient Info Use Case', () => {
       new UniqueEntityId('user-01'),
     );
 
+    await inMemoryUsersRepository.create(user);
+
     const result = await sut.execute({
+      userId: 'user-01',
       recipientId: 'recipient-01',
-      user: user,
     });
 
     expect(result.isLeft()).toBe(true);

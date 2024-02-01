@@ -19,7 +19,6 @@ const editRecipientBodySchema = z.object({
   street: z.string(),
   number: z.string(),
   zipCode: z.string(),
-  user: z.any(),
 });
 
 const bodyValidationPipe = new ZodValidationPipe(editRecipientBodySchema);
@@ -34,21 +33,21 @@ export class EditRecipientController {
   @HttpCode(204)
   async handle(
     @Body(bodyValidationPipe) body: EditRecipientBodySchema,
-    @CurrentUser() currentUser: UserPayload,
+    @CurrentUser() user: UserPayload,
     @Param('id') recipientId: string,
   ) {
-    const { name, state, city, street, number, zipCode, user } = body;
-    const userId = currentUser.sub;
+    const { name, state, city, street, number, zipCode } = body;
+    const userId = user.sub;
 
     const result = await this.editRecipient.execute({
+      userId: userId,
+      recipientId,
       name,
       state,
       city,
       street,
       number,
       zipCode,
-      user: { ...user, id: userId },
-      recipientId,
     });
 
     if (result.isLeft()) {

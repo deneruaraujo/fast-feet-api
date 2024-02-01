@@ -4,11 +4,11 @@ import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-e
 import { Recipient } from '../../enterprise/entities/recipient';
 import { RecipientsRepository } from '../repositories/recipients-repository';
 import { UserRole } from '@/core/enum/user-role.enum';
-import { User } from '../../enterprise/entities/user';
 import { Injectable } from '@nestjs/common';
+import { UsersRepository } from '../repositories/users-repository';
 
 interface GetRecipientInfoUseCaseRequest {
-  user: User;
+  userId: string;
   recipientId: string;
 }
 
@@ -20,13 +20,17 @@ type GetRecipientInfoUseCaseResponse = Either<
 >;
 @Injectable()
 export class GetRecipientInfoUseCase {
-  constructor(private recipientRepository: RecipientsRepository) {}
+  constructor(
+    private recipientRepository: RecipientsRepository,
+    private usersRepository: UsersRepository,
+  ) {}
 
   async execute({
+    userId,
     recipientId,
-    user,
   }: GetRecipientInfoUseCaseRequest): Promise<GetRecipientInfoUseCaseResponse> {
     const recipient = await this.recipientRepository.findById(recipientId);
+    const user = await this.usersRepository.findById(userId);
 
     if (!recipient) {
       return left(new ResourceNotFoundError());

@@ -1,5 +1,4 @@
 import { Either, left, right } from '@/core/either';
-import { User } from '../../enterprise/entities/user';
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error';
 import { NotAllowedError } from '@/core/errors/errors/not-allowed-error';
 import { Order } from '../../enterprise/entities/order';
@@ -10,6 +9,7 @@ import { OrderAttachmentList } from '../../enterprise/entities/order-attachment-
 import { OrderAttachment } from '../../enterprise/entities/order-attachment';
 import { UniqueEntityId } from '@/core/entities/unique-entity-id';
 import { Injectable } from '@nestjs/common';
+import { UsersRepository } from '../repositories/users-repository';
 
 interface EditOrderUseCaseRequest {
   orderId: string;
@@ -20,7 +20,6 @@ interface EditOrderUseCaseRequest {
   hasBeenDelivered: boolean;
   hasBeenReturned: boolean;
   attachmentsIds: string[];
-  user: User;
 }
 
 type EditOrderUseCaseResponse = Either<
@@ -34,6 +33,7 @@ export class EditOrderUseCase {
   constructor(
     private ordersRepository: OrdersRepository,
     private orderAttachmentsRepository: OrderAttachmentsRepository,
+    private usersRepository: UsersRepository,
   ) {}
 
   async execute({
@@ -45,9 +45,9 @@ export class EditOrderUseCase {
     hasBeenDelivered,
     hasBeenReturned,
     attachmentsIds,
-    user,
   }: EditOrderUseCaseRequest): Promise<EditOrderUseCaseResponse> {
     const order = await this.ordersRepository.findById(orderId);
+    const user = await this.usersRepository.findById(userId);
 
     if (!order) {
       return left(new ResourceNotFoundError());

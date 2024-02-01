@@ -21,7 +21,6 @@ const createRecipientBodySchema = z.object({
   zipCode: z.string(),
   latitude: z.number(),
   longitude: z.number(),
-  user: z.any(),
 });
 
 const bodyValidationPipe = new ZodValidationPipe(createRecipientBodySchema);
@@ -36,22 +35,14 @@ export class CreateRecipientController {
   @Post()
   async handle(
     @Body(bodyValidationPipe) body: CreateRecipientBodySchema,
-    @CurrentUser() currentUser: UserPayload,
+    @CurrentUser() user: UserPayload,
   ) {
-    const {
-      name,
-      state,
-      city,
-      street,
-      number,
-      zipCode,
-      latitude,
-      longitude,
-      user,
-    } = body;
-    const userId = currentUser.sub;
+    const { name, state, city, street, number, zipCode, latitude, longitude } =
+      body;
+    const userId = user.sub;
 
     const result = await this.createRecipient.execute({
+      userId: userId,
       name,
       state,
       city,
@@ -60,7 +51,6 @@ export class CreateRecipientController {
       zipCode,
       latitude,
       longitude,
-      user: { ...user, id: userId },
     });
 
     if (result.isLeft()) {

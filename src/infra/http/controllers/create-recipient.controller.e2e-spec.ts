@@ -30,7 +30,9 @@ describe('Create Recipient (E2E)', () => {
   });
 
   test('[POST] /recipient', async () => {
-    const user = await userFactory.makePrismaUser();
+    const user = await userFactory.makePrismaUser({
+      role: UserRole.Admin,
+    });
 
     const accessToken = jwt.sign({ sub: user.id.toString() });
 
@@ -46,7 +48,7 @@ describe('Create Recipient (E2E)', () => {
         zipCode: '54321',
         latitude: 35.8709495,
         longitude: 137.9809247,
-        user: { role: UserRole.Admin },
+        user: user,
       });
 
     expect(response.statusCode).toBe(201);

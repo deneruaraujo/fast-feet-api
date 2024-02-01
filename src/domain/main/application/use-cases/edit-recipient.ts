@@ -1,13 +1,14 @@
 import { Either, left, right } from '@/core/either';
-import { User } from '../../enterprise/entities/user';
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error';
 import { NotAllowedError } from '@/core/errors/errors/not-allowed-error';
 import { Recipient } from '../../enterprise/entities/recipient';
 import { RecipientsRepository } from '../repositories/recipients-repository';
 import { UserRole } from '@/core/enum/user-role.enum';
 import { Injectable } from '@nestjs/common';
+import { UsersRepository } from '../repositories/users-repository';
 
 interface EditRecipientUseCaseRequest {
+  userId: string;
   recipientId: string;
   name: string;
   state: string;
@@ -15,7 +16,6 @@ interface EditRecipientUseCaseRequest {
   street: string;
   number: string;
   zipCode: string;
-  user: User;
 }
 
 type EditRecipientUseCaseResponse = Either<
@@ -26,9 +26,13 @@ type EditRecipientUseCaseResponse = Either<
 >;
 @Injectable()
 export class EditRecipientUseCase {
-  constructor(private recipientRepository: RecipientsRepository) {}
+  constructor(
+    private recipientRepository: RecipientsRepository,
+    private usersRepository: UsersRepository,
+  ) {}
 
   async execute({
+    userId,
     recipientId,
     name,
     state,
@@ -36,9 +40,9 @@ export class EditRecipientUseCase {
     street,
     number,
     zipCode,
-    user,
   }: EditRecipientUseCaseRequest): Promise<EditRecipientUseCaseResponse> {
     const recipient = await this.recipientRepository.findById(recipientId);
+    const user = await this.usersRepository.findById(userId);
 
     if (!recipient) {
       return left(new ResourceNotFoundError());

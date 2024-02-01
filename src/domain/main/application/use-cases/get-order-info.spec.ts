@@ -7,9 +7,11 @@ import { UniqueEntityId } from '@/core/entities/unique-entity-id';
 import { makeOrder } from 'test/factories/make-order';
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error';
 import { NotAllowedError } from '@/core/errors/errors/not-allowed-error';
+import { InMemoryUsersRepository } from 'test/repositories/in-memory-users-repository';
 
 let inMemoryOrdersRepository: InMemoryOrdersRepository;
 let inMemoryOrderAttachmentsRepository: InMemoryOrderAttachmentsRepository;
+let inMemoryUsersRepository: InMemoryUsersRepository;
 
 let sut: GetOrderInfoUseCase;
 
@@ -20,8 +22,12 @@ describe('Get Order Info Use Case', () => {
     inMemoryOrdersRepository = new InMemoryOrdersRepository(
       inMemoryOrderAttachmentsRepository,
     );
+    inMemoryUsersRepository = new InMemoryUsersRepository();
 
-    sut = new GetOrderInfoUseCase(inMemoryOrdersRepository);
+    sut = new GetOrderInfoUseCase(
+      inMemoryOrdersRepository,
+      inMemoryUsersRepository,
+    );
   });
 
   it('should be able to get a order info by id', async () => {
@@ -32,13 +38,15 @@ describe('Get Order Info Use Case', () => {
       new UniqueEntityId('user-01'),
     );
 
+    await inMemoryUsersRepository.create(user);
+
     await inMemoryOrdersRepository.create(
       makeOrder({}, new UniqueEntityId('order-01')),
     );
 
     const result = await sut.execute({
+      userId: 'user-01',
       orderId: 'order-01',
-      user: user,
     });
 
     expect(result.isRight()).toBe(true);
@@ -52,13 +60,15 @@ describe('Get Order Info Use Case', () => {
       new UniqueEntityId('user-01'),
     );
 
+    await inMemoryUsersRepository.create(user);
+
     await inMemoryOrdersRepository.create(
       makeOrder({}, new UniqueEntityId('order-01')),
     );
 
     const result = await sut.execute({
+      userId: 'user-01',
       orderId: 'order-02',
-      user: user,
     });
 
     expect(result.isLeft()).toBe(true);
@@ -73,13 +83,15 @@ describe('Get Order Info Use Case', () => {
       new UniqueEntityId('user-01'),
     );
 
+    await inMemoryUsersRepository.create(user);
+
     await inMemoryOrdersRepository.create(
       makeOrder({}, new UniqueEntityId('order-01')),
     );
 
     const result = await sut.execute({
+      userId: 'user-01',
       orderId: 'order-01',
-      user: user,
     });
 
     expect(result.isLeft()).toBe(true);

@@ -6,15 +6,21 @@ import { UniqueEntityId } from '@/core/entities/unique-entity-id';
 import { makeRecipient } from 'test/factories/make-recipient';
 import { NotAllowedError } from '@/core/errors/errors/not-allowed-error';
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error';
+import { InMemoryUsersRepository } from 'test/repositories/in-memory-users-repository';
 
 let inMemoryRecipientRepository: InMemoryRecipientsRepository;
+let inMemoryUsersRepository: InMemoryUsersRepository;
 let sut: EditRecipientUseCase;
 
 describe('Edit Recipient', () => {
   beforeEach(() => {
     inMemoryRecipientRepository = new InMemoryRecipientsRepository();
+    inMemoryUsersRepository = new InMemoryUsersRepository();
 
-    sut = new EditRecipientUseCase(inMemoryRecipientRepository);
+    sut = new EditRecipientUseCase(
+      inMemoryRecipientRepository,
+      inMemoryUsersRepository,
+    );
   });
 
   it('should be able to edit a recipient', async () => {
@@ -25,11 +31,14 @@ describe('Edit Recipient', () => {
       new UniqueEntityId('user-01'),
     );
 
+    await inMemoryUsersRepository.create(user);
+
     const newRecipient = makeRecipient({}, new UniqueEntityId('recipient-01'));
 
     await inMemoryRecipientRepository.create(newRecipient);
 
     const result = await sut.execute({
+      userId: 'user-01',
       recipientId: 'recipient-01',
       name: 'new name',
       state: 'new state',
@@ -37,7 +46,6 @@ describe('Edit Recipient', () => {
       street: 'new street',
       number: 'new number',
       zipCode: 'new zipcode',
-      user: user,
     });
 
     expect(result.isRight()).toBe(true);
@@ -54,11 +62,14 @@ describe('Edit Recipient', () => {
       new UniqueEntityId('user-01'),
     );
 
+    await inMemoryUsersRepository.create(user);
+
     const newRecipient = makeRecipient({}, new UniqueEntityId('recipient-01'));
 
     await inMemoryRecipientRepository.create(newRecipient);
 
     const result = await sut.execute({
+      userId: 'user-01',
       recipientId: 'recipient-02',
       name: 'new name',
       state: 'new state',
@@ -66,7 +77,6 @@ describe('Edit Recipient', () => {
       street: 'new street',
       number: 'new number',
       zipCode: 'new zipcode',
-      user: user,
     });
 
     expect(result.isLeft()).toBe(true);
@@ -81,11 +91,14 @@ describe('Edit Recipient', () => {
       new UniqueEntityId('user-01'),
     );
 
+    await inMemoryUsersRepository.create(user);
+
     const newRecipient = makeRecipient({}, new UniqueEntityId('recipient-01'));
 
     await inMemoryRecipientRepository.create(newRecipient);
 
     const result = await sut.execute({
+      userId: 'user-01',
       recipientId: 'recipient-01',
       name: 'new name',
       state: 'new state',
@@ -93,7 +106,6 @@ describe('Edit Recipient', () => {
       street: 'new street',
       number: 'new number',
       zipCode: 'new zipcode',
-      user: user,
     });
 
     expect(result.isLeft()).toBe(true);

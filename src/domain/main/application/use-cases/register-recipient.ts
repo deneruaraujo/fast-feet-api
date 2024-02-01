@@ -2,11 +2,13 @@ import { Either, left, right } from '@/core/either';
 import { Recipient } from '../../enterprise/entities/recipient';
 import { RecipientsRepository } from '../repositories/recipients-repository';
 import { NotAllowedError } from '@/core/errors/errors/not-allowed-error';
-import { User } from '../../enterprise/entities/user';
 import { UserRole } from '@/core/enum/user-role.enum';
 import { Injectable } from '@nestjs/common';
+import { UniqueEntityId } from '@/core/entities/unique-entity-id';
+import { UsersRepository } from '../repositories/users-repository';
 
 interface RegisterRecipientUseCaseRequest {
+  userId: string;
   name: string;
   state: string;
   city: string;
@@ -15,7 +17,6 @@ interface RegisterRecipientUseCaseRequest {
   zipCode: string;
   latitude: number;
   longitude: number;
-  user: User;
 }
 
 type RegisterRecipientUseCaseResponse = Either<
@@ -26,9 +27,13 @@ type RegisterRecipientUseCaseResponse = Either<
 >;
 @Injectable()
 export class RegisterRecipientUseCase {
-  constructor(private recipientRepository: RecipientsRepository) {}
+  constructor(
+    private recipientRepository: RecipientsRepository,
+    private usersRepository: UsersRepository,
+  ) {}
 
   async execute({
+    userId,
     name,
     state,
     city,
@@ -37,9 +42,9 @@ export class RegisterRecipientUseCase {
     zipCode,
     latitude,
     longitude,
-    user,
   }: RegisterRecipientUseCaseRequest): Promise<RegisterRecipientUseCaseResponse> {
     const recipient = Recipient.create({
+      userId: new UniqueEntityId(userId),
       name,
       state,
       city,
@@ -49,6 +54,8 @@ export class RegisterRecipientUseCase {
       latitude,
       longitude,
     });
+
+    const user = await this.usersRepository.findById(userId);
 
     if (user.role !== UserRole.Admin) {
       return left(new NotAllowedError());

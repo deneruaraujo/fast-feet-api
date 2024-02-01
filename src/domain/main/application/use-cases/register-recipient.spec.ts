@@ -4,14 +4,22 @@ import { makeUser } from 'test/factories/make-user';
 import { UniqueEntityId } from '@/core/entities/unique-entity-id';
 import { UserRole } from '@/core/enum/user-role.enum';
 import { NotAllowedError } from '@/core/errors/errors/not-allowed-error';
+import { InMemoryUsersRepository } from 'test/repositories/in-memory-users-repository';
 
 let inMemoryRecipientRepository: InMemoryRecipientsRepository;
+let inMemoryUsersRepository: InMemoryUsersRepository;
+
 let sut: RegisterRecipientUseCase;
 
 describe('Register Recipient', () => {
   beforeEach(() => {
     inMemoryRecipientRepository = new InMemoryRecipientsRepository();
-    sut = new RegisterRecipientUseCase(inMemoryRecipientRepository);
+    inMemoryUsersRepository = new InMemoryUsersRepository();
+
+    sut = new RegisterRecipientUseCase(
+      inMemoryRecipientRepository,
+      inMemoryUsersRepository,
+    );
   });
 
   it('should be able to register a new recipient', async () => {
@@ -22,7 +30,10 @@ describe('Register Recipient', () => {
       new UniqueEntityId('user-01'),
     );
 
+    await inMemoryUsersRepository.create(user);
+
     const result = await sut.execute({
+      userId: 'user-01',
       name: 'Jane Smith',
       state: 'ST',
       city: 'Anytown',
@@ -31,7 +42,6 @@ describe('Register Recipient', () => {
       zipCode: '54321',
       latitude: 35.8709495,
       longitude: 137.9809247,
-      user: user,
     });
 
     expect(result.isRight()).toBe(true);
@@ -48,7 +58,10 @@ describe('Register Recipient', () => {
       new UniqueEntityId('user-01'),
     );
 
+    await inMemoryUsersRepository.create(user);
+
     const result = await sut.execute({
+      userId: 'user-01',
       name: 'Jane Smith',
       state: 'ST',
       city: 'Anytown',
@@ -57,7 +70,6 @@ describe('Register Recipient', () => {
       zipCode: '54321',
       latitude: 35.8709495,
       longitude: 137.9809247,
-      user: user,
     });
 
     expect(result.isLeft()).toBe(true);

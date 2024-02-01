@@ -6,16 +6,22 @@ import { UserRole } from '@/core/enum/user-role.enum';
 import { NotAllowedError } from '@/core/errors/errors/not-allowed-error';
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error';
 import { makeUser } from 'test/factories/make-user';
+import { InMemoryUsersRepository } from 'test/repositories/in-memory-users-repository';
 
 let inMemoryRecipientsRepository: InMemoryRecipientsRepository;
+let inMemoryUsersRepository: InMemoryUsersRepository;
 
 let sut: DeleteRecipientUseCase;
 
 describe('Delete Recipient', () => {
   beforeEach(() => {
     inMemoryRecipientsRepository = new InMemoryRecipientsRepository();
+    inMemoryUsersRepository = new InMemoryUsersRepository();
 
-    sut = new DeleteRecipientUseCase(inMemoryRecipientsRepository);
+    sut = new DeleteRecipientUseCase(
+      inMemoryRecipientsRepository,
+      inMemoryUsersRepository,
+    );
   });
 
   it('should be able to delete a recipient', async () => {
@@ -26,13 +32,15 @@ describe('Delete Recipient', () => {
       new UniqueEntityId('user-01'),
     );
 
-    const newRecipient = makeRecipient({}, new UniqueEntityId('recipient-01'));
+    await inMemoryUsersRepository.create(user);
 
-    await inMemoryRecipientsRepository.create(newRecipient);
+    const recipient = makeRecipient({}, new UniqueEntityId('recipient-01'));
+
+    await inMemoryRecipientsRepository.create(recipient);
 
     await sut.execute({
+      userId: 'user-01',
       recipientId: 'recipient-01',
-      user,
     });
 
     expect(inMemoryRecipientsRepository.items).toHaveLength(0);
@@ -46,13 +54,15 @@ describe('Delete Recipient', () => {
       new UniqueEntityId('user-01'),
     );
 
-    const newRecipient = makeRecipient({}, new UniqueEntityId('recipient-01'));
+    await inMemoryUsersRepository.create(user);
 
-    await inMemoryRecipientsRepository.create(newRecipient);
+    const recipient = makeRecipient({}, new UniqueEntityId('recipient-01'));
+
+    await inMemoryRecipientsRepository.create(recipient);
 
     const result = await sut.execute({
+      userId: 'user-01',
       recipientId: 'recipient-01',
-      user,
     });
 
     expect(result.isLeft()).toBe(true);
@@ -68,13 +78,15 @@ describe('Delete Recipient', () => {
       new UniqueEntityId('user-01'),
     );
 
-    const newRecipient = makeRecipient({}, new UniqueEntityId('recipient-01'));
+    await inMemoryUsersRepository.create(user);
 
-    await inMemoryRecipientsRepository.create(newRecipient);
+    const recipient = makeRecipient({}, new UniqueEntityId('recipient-01'));
+
+    await inMemoryRecipientsRepository.create(recipient);
 
     const result = await sut.execute({
+      userId: 'user-01',
       recipientId: 'recipient-02',
-      user,
     });
 
     expect(result.isLeft()).toBe(true);

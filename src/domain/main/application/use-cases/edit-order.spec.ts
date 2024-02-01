@@ -8,22 +8,29 @@ import { makeOrder } from 'test/factories/make-order';
 import { makeOrderAttachment } from 'test/factories/make-order-attachments';
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error';
 import { NotAllowedError } from '@/core/errors/errors/not-allowed-error';
+import { InMemoryUsersRepository } from 'test/repositories/in-memory-users-repository';
 
 let inMemoryOrdersRepository: InMemoryOrdersRepository;
 let inMemoryOrderAttachmentsRepository: InMemoryOrderAttachmentsRepository;
+let inMemoryUsersRepository: InMemoryUsersRepository;
 
 let sut: EditOrderUseCase;
 
 describe('Edit Order', () => {
-  inMemoryOrderAttachmentsRepository = new InMemoryOrderAttachmentsRepository();
-  inMemoryOrdersRepository = new InMemoryOrdersRepository(
-    inMemoryOrderAttachmentsRepository,
-  );
+  beforeEach(() => {
+    inMemoryOrderAttachmentsRepository =
+      new InMemoryOrderAttachmentsRepository();
+    inMemoryOrdersRepository = new InMemoryOrdersRepository(
+      inMemoryOrderAttachmentsRepository,
+    );
+    inMemoryUsersRepository = new InMemoryUsersRepository();
 
-  sut = new EditOrderUseCase(
-    inMemoryOrdersRepository,
-    inMemoryOrderAttachmentsRepository,
-  );
+    sut = new EditOrderUseCase(
+      inMemoryOrdersRepository,
+      inMemoryOrderAttachmentsRepository,
+      inMemoryUsersRepository,
+    );
+  });
 
   it('should be able to edit an order', async () => {
     const user = makeUser(
@@ -32,6 +39,8 @@ describe('Edit Order', () => {
       },
       new UniqueEntityId('user-01'),
     );
+
+    await inMemoryUsersRepository.create(user);
 
     const newOrder = makeOrder(
       {
@@ -66,7 +75,6 @@ describe('Edit Order', () => {
       hasBeenDelivered: false,
       hasBeenReturned: false,
       attachmentsIds: ['1', '3'],
-      user: user,
     });
 
     expect(result.isRight()).toBe(true);
@@ -82,6 +90,8 @@ describe('Edit Order', () => {
       },
       new UniqueEntityId('user-01'),
     );
+
+    await inMemoryUsersRepository.create(user);
 
     const newOrder = makeOrder(
       {
@@ -115,7 +125,6 @@ describe('Edit Order', () => {
       hasBeenDelivered: false,
       hasBeenReturned: false,
       attachmentsIds: ['1', '3'],
-      user: user,
     });
 
     expect(result.isLeft()).toBe(true);
@@ -129,6 +138,8 @@ describe('Edit Order', () => {
       },
       new UniqueEntityId('user-01'),
     );
+
+    await inMemoryUsersRepository.create(user);
 
     const newOrder = makeOrder(
       {
@@ -162,7 +173,6 @@ describe('Edit Order', () => {
       hasBeenDelivered: false,
       hasBeenReturned: false,
       attachmentsIds: ['1', '3'],
-      user: user,
     });
 
     expect(result.isLeft()).toBe(true);

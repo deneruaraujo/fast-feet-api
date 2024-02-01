@@ -6,6 +6,7 @@ export class PrismaRecipientMapper {
   static toDomain(raw: PrismaRecipient): Recipient {
     return Recipient.create(
       {
+        userId: new UniqueEntityId(raw.userId),
         name: raw.name,
         state: raw.state,
         city: raw.city,
@@ -22,6 +23,7 @@ export class PrismaRecipientMapper {
   static toPrisma(recipient: Recipient): Prisma.RecipientUncheckedCreateInput {
     return {
       id: recipient.id.toString(),
+      userId: recipient.userId.toString(),
       name: recipient.name,
       state: recipient.state,
       city: recipient.city,

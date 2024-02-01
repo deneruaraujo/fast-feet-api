@@ -8,7 +8,9 @@ import { UserRole } from '@/core/enum/user-role.enum';
 import { makeOrderAttachment } from 'test/factories/make-order-attachments';
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error';
 import { NotAllowedError } from '@/core/errors/errors/not-allowed-error';
+import { InMemoryUsersRepository } from 'test/repositories/in-memory-users-repository';
 
+let inMemoryUsersRepository: InMemoryUsersRepository;
 let inMemoryOrdersRepository: InMemoryOrdersRepository;
 let inMemoryOrderAttachmentsRepository: InMemoryOrderAttachmentsRepository;
 let sut: DeleteOrderUseCase;
@@ -20,7 +22,12 @@ describe('Delete Order', () => {
     inMemoryOrdersRepository = new InMemoryOrdersRepository(
       inMemoryOrderAttachmentsRepository,
     );
-    sut = new DeleteOrderUseCase(inMemoryOrdersRepository);
+    inMemoryUsersRepository = new InMemoryUsersRepository();
+
+    sut = new DeleteOrderUseCase(
+      inMemoryOrdersRepository,
+      inMemoryUsersRepository,
+    );
   });
 
   it('should be able to delete an order', async () => {
@@ -30,6 +37,8 @@ describe('Delete Order', () => {
       },
       new UniqueEntityId('user-01'),
     );
+
+    await inMemoryUsersRepository.create(user);
 
     const newOrder = makeOrder({}, new UniqueEntityId('order-01'));
 
@@ -47,8 +56,8 @@ describe('Delete Order', () => {
     );
 
     const result = await sut.execute({
+      userId: 'user-01',
       orderId: 'order-01',
-      user: user,
     });
 
     expect(result.isRight()).toBe(true);
@@ -64,6 +73,8 @@ describe('Delete Order', () => {
       new UniqueEntityId('user-01'),
     );
 
+    await inMemoryUsersRepository.create(user);
+
     const newOrder = makeOrder({}, new UniqueEntityId('order-01'));
 
     await inMemoryOrdersRepository.create(newOrder);
@@ -80,8 +91,8 @@ describe('Delete Order', () => {
     );
 
     const result = await sut.execute({
+      userId: 'user-01',
       orderId: 'order-02',
-      user: user,
     });
 
     expect(result.isLeft()).toBe(true);
@@ -96,6 +107,8 @@ describe('Delete Order', () => {
       new UniqueEntityId('user-01'),
     );
 
+    await inMemoryUsersRepository.create(user);
+
     const newOrder = makeOrder({}, new UniqueEntityId('order-01'));
 
     await inMemoryOrdersRepository.create(newOrder);
@@ -112,8 +125,8 @@ describe('Delete Order', () => {
     );
 
     const result = await sut.execute({
+      userId: 'user-01',
       orderId: 'order-01',
-      user: user,
     });
 
     expect(result.isLeft()).toBe(true);
