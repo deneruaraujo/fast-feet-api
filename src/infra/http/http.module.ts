@@ -9,6 +9,8 @@ import { CreateRecipientController } from './controllers/create-recipient.contro
 import { RegisterRecipientUseCase } from '@/domain/main/application/use-cases/register-recipient';
 import { EditRecipientController } from './controllers/edit-recipient.controller.e2e';
 import { EditRecipientUseCase } from '@/domain/main/application/use-cases/edit-recipient';
+import { DeleteRecipientController } from './controllers/delete-recipient.controller.e2e';
+import { DeleteRecipientUseCase } from '@/domain/main/application/use-cases/delete-recipient';
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -17,12 +19,14 @@ import { EditRecipientUseCase } from '@/domain/main/application/use-cases/edit-r
     AuthenticateController,
     CreateRecipientController,
     EditRecipientController,
+    DeleteRecipientController,
   ],
   providers: [
     RegisterUserUseCase,
     AuthenticateUserUseCase,
     RegisterRecipientUseCase,
     EditRecipientUseCase,
+    DeleteRecipientUseCase,
   ],
 })
 export class HttpModule {}
