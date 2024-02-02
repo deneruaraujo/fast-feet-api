@@ -13,7 +13,7 @@ export class PrismaUserMapper {
         role:
           raw.role === UserRole.Admin ? UserRole.Admin : UserRole.Deliveryman,
       },
-      new UniqueEntityId(),
+      new UniqueEntityId(raw.id),
     );
   }
 
