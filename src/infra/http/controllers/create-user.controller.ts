@@ -14,24 +14,24 @@ import { ZodValidationPipe } from '../pipes/zod-validation-pipe';
 import { UserRole } from '@/core/enum/user-role.enum';
 import { UserAlreadyExistsError } from '@/domain/main/application/use-cases/errors/user-already-exists-error';
 
-const createAccountBodySchema = z.object({
+const createUserBodySchema = z.object({
   name: z.string(),
   ssn: z.string(),
   password: z.string(),
   role: z.enum([UserRole.Admin, UserRole.Deliveryman]),
 });
 
-type CreateAccountBodySchema = z.infer<typeof createAccountBodySchema>;
+type CreateUserBodySchema = z.infer<typeof createUserBodySchema>;
 
-@Controller('/accounts')
+@Controller('/users')
 @Public()
-export class CreateAccountController {
+export class CreateUserController {
   constructor(private registerUser: RegisterUserUseCase) {}
 
   @Post()
   @HttpCode(201)
-  @UsePipes(new ZodValidationPipe(createAccountBodySchema))
-  async handle(@Body() body: CreateAccountBodySchema) {
+  @UsePipes(new ZodValidationPipe(createUserBodySchema))
+  async handle(@Body() body: CreateUserBodySchema) {
     const { name, ssn, password, role } = body;
 
     const result = await this.registerUser.execute({

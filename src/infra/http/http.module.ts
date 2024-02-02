@@ -2,7 +2,7 @@ import { GetRecipientInfoController } from './controllers/get-recipient-info.con
 import { Module } from '@nestjs/common';
 import { CryptographyModule } from '../cryptography/cryptography.module';
 import { DatabaseModule } from '../database/database.module';
-import { CreateAccountController } from './controllers/create-account.controller';
+import { CreateUserController } from './controllers/create-user.controller';
 import { RegisterUserUseCase } from '@/domain/main/application/use-cases/register-user';
 import { AuthenticateController } from './controllers/authenticate.controller';
 import { AuthenticateUserUseCase } from '@/domain/main/application/use-cases/authenticate-user';
@@ -13,16 +13,19 @@ import { EditRecipientUseCase } from '@/domain/main/application/use-cases/edit-r
 import { DeleteRecipientController } from './controllers/delete-recipient.controller';
 import { DeleteRecipientUseCase } from '@/domain/main/application/use-cases/delete-recipient';
 import { GetRecipientInfoUseCase } from '@/domain/main/application/use-cases/get-recipient-info';
+import { EditUserController } from './controllers/edit-user.controller';
+import { EditUserUseCase } from '@/domain/main/application/use-cases/edit-user';
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
   controllers: [
-    CreateAccountController,
+    CreateUserController,
     AuthenticateController,
     CreateRecipientController,
     EditRecipientController,
     DeleteRecipientController,
     GetRecipientInfoController,
+    EditUserController,
   ],
   providers: [
     RegisterUserUseCase,
@@ -31,6 +34,7 @@ import { GetRecipientInfoUseCase } from '@/domain/main/application/use-cases/get
     EditRecipientUseCase,
     DeleteRecipientUseCase,
     GetRecipientInfoUseCase,
+    EditUserUseCase,
   ],
 })
 export class HttpModule {}
