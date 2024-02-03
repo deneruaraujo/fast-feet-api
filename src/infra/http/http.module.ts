@@ -17,6 +17,8 @@ import { EditUserController } from './controllers/edit-user.controller';
 import { EditUserUseCase } from '@/domain/main/application/use-cases/edit-user';
 import { DeleteUserController } from './controllers/delete-user.controller';
 import { DeleteUserUseCase } from '@/domain/main/application/use-cases/delete-user';
+import { GetUserInfoController } from './controllers/get-user-info.controller';
+import { GetUserInfoUseCase } from '@/domain/main/application/use-cases/get-user-info';
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -29,6 +31,7 @@ import { DeleteUserUseCase } from '@/domain/main/application/use-cases/delete-us
     GetRecipientInfoController,
     EditUserController,
     DeleteUserController,
+    GetUserInfoController,
   ],
   providers: [
     RegisterUserUseCase,
@@ -39,6 +42,7 @@ import { DeleteUserUseCase } from '@/domain/main/application/use-cases/delete-us
     GetRecipientInfoUseCase,
     EditUserUseCase,
     DeleteUserUseCase,
+    GetUserInfoUseCase,
   ],
 })
 export class HttpModule {}
