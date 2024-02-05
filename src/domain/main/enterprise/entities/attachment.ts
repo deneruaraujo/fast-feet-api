@@ -1,9 +1,10 @@
 import { Entity } from '@/core/entities/entity';
 import { UniqueEntityId } from '@/core/entities/unique-entity-id';
 
-interface AttachmentProps {
+export interface AttachmentProps {
   title: string;
-  link: string;
+  url: string;
+  orderId: string;
 }
 
 export class Attachment extends Entity<AttachmentProps> {
@@ -11,8 +12,12 @@ export class Attachment extends Entity<AttachmentProps> {
     return this.props.title;
   }
 
-  get link() {
-    return this.props.link;
+  get url() {
+    return this.props.url;
+  }
+
+  get orderId() {
+    return this.props.orderId;
   }
 
   static create(props: AttachmentProps, id?: UniqueEntityId) {

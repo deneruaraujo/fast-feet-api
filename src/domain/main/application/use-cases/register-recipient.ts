@@ -44,7 +44,7 @@ export class RegisterRecipientUseCase {
     longitude,
   }: RegisterRecipientUseCaseRequest): Promise<RegisterRecipientUseCaseResponse> {
     const recipient = Recipient.create({
-      userId: new UniqueEntityId(userId),
+      userId: new UniqueEntityId(userId).toString(),
       name,
       state,
       city,

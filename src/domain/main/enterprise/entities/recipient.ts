@@ -2,7 +2,7 @@ import { Entity } from '@/core/entities/entity';
 import { UniqueEntityId } from '@/core/entities/unique-entity-id';
 
 export interface RecipientProps {
-  userId: UniqueEntityId;
+  userId: string;
   name: string;
   state: string;
   city: string;

@@ -37,7 +37,7 @@ describe('Get Recipient Info (E2E)', () => {
     const accessToken = jwt.sign({ sub: user.id.toString() });
 
     const recipient = await recipientFactory.makePrismaRecipient({
-      userId: user.id,
+      userId: user.id.toString(),
       name: 'Recipient 01',
     });
 

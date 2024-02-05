@@ -6,9 +6,12 @@ import { UniqueEntityId } from '@/core/entities/unique-entity-id';
 import { makeRecipient } from 'test/factories/make-recipient';
 import { makeUser } from 'test/factories/make-user';
 import { NotAllowedError } from '@/core/errors/errors/not-allowed-error';
+import { InMemoryUsersRepository } from 'test/repositories/in-memory-users-repository';
 
 let inMemoryOrdersRepository: InMemoryOrdersRepository;
 let inMemoryOrderAttachmentsRepository: InMemoryOrderAttachmentsRepository;
+let inMemoryUsersRepository: InMemoryUsersRepository;
+
 let sut: CreateOrderUseCase;
 
 describe('Create Order', () => {
@@ -18,7 +21,12 @@ describe('Create Order', () => {
     inMemoryOrdersRepository = new InMemoryOrdersRepository(
       inMemoryOrderAttachmentsRepository,
     );
-    sut = new CreateOrderUseCase(inMemoryOrdersRepository);
+    inMemoryUsersRepository = new InMemoryUsersRepository();
+
+    sut = new CreateOrderUseCase(
+      inMemoryOrdersRepository,
+      inMemoryUsersRepository,
+    );
   });
 
   it('should be able to create an order', async () => {
@@ -29,10 +37,12 @@ describe('Create Order', () => {
       new UniqueEntityId('user-01'),
     );
 
+    await inMemoryUsersRepository.create(user);
+
     const recipient = makeRecipient({}, new UniqueEntityId('recipient-01'));
 
     const result = await sut.execute({
-      userId: '1',
+      userId: 'user-01',
       name: 'name',
       recipient: recipient,
       isAvailableForPickup: false,
@@ -40,7 +50,6 @@ describe('Create Order', () => {
       hasBeenDelivered: false,
       hasBeenReturned: false,
       attachmentsIds: ['1', '2'],
-      user: user,
     });
 
     expect(result.isRight()).toBe(true);
@@ -64,10 +73,12 @@ describe('Create Order', () => {
       new UniqueEntityId('user-01'),
     );
 
+    await inMemoryUsersRepository.create(user);
+
     const recipient = makeRecipient({}, new UniqueEntityId('recipient-01'));
 
     const result = await sut.execute({
-      userId: '1',
+      userId: 'user-01',
       name: 'name',
       recipient: recipient,
       isAvailableForPickup: false,
@@ -75,7 +86,6 @@ describe('Create Order', () => {
       hasBeenDelivered: false,
       hasBeenReturned: false,
       attachmentsIds: ['1', '2'],
-      user: user,
     });
 
     expect(result.isLeft()).toBe(true);

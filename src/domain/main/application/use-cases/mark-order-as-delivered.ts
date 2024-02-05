@@ -42,7 +42,7 @@ export class MarkOrderAsDeliveredUseCase {
       return left(new ResourceNotFoundError());
     }
 
-    if (userId !== order.userId) {
+    if (userId !== order.userId.toString()) {
       return left(new NotAllowedError());
     }
 

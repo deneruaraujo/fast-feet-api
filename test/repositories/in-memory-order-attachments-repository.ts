@@ -6,6 +6,17 @@ export class InMemoryOrderAttachmentsRepository
 {
   public items: OrderAttachment[] = [];
 
+  async createMany(attachments: OrderAttachment[]): Promise<void> {
+    this.items.push(...attachments);
+  }
+  async deleteMany(attachments: OrderAttachment[]): Promise<void> {
+    const orderAttachments = this.items.filter((item) => {
+      return !attachments.some((attachment) => attachment.equals(item));
+    });
+
+    this.items = orderAttachments;
+  }
+
   async findManyByOrderId(orderId: string) {
     const orderAttachments = this.items.filter(
       (item) => item.orderId.toString() === orderId,

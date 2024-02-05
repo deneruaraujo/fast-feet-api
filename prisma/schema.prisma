@@ -42,8 +42,6 @@ model Recipient {
 
   user User @relation(fields: [userId], references: [id])
 
-  Order Order[]
-
   @@map("recipients")
 }
 
@@ -51,7 +49,6 @@ model Order {
   id                   String    @id @default(uuid())
   userId               String    @map("user_id")
   name                 String
-  recipientId          String
   isAvailableForPickup Boolean   @map("is_available_for_pickup")
   hasBeenPickedUp      Boolean   @map("has_been_picked_up")
   hasBeenDelivered     Boolean   @map("has_been_delivered")
@@ -60,7 +57,6 @@ model Order {
   updatedAt            DateTime? @updatedAt @map("updated_at")
 
   user       User         @relation(fields: [userId], references: [id])
-  recipient  Recipient    @relation(fields: [recipientId], references: [id])
   Attachment Attachment[]
 
   @@map("orders")

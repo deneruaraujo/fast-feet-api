@@ -10,7 +10,7 @@ import { MarkedAsReturnedEvent } from '../events/marked-as-returned-event';
 export interface OrderProps {
   userId: string;
   name: string;
-  recipient: Recipient;
+  recipient?: Recipient;
   isAvailableForPickup: boolean;
   hasBeenPickedUp: boolean;
   hasBeenDelivered: boolean;
