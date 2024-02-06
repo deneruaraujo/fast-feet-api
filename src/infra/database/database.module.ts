@@ -34,6 +34,7 @@ import { PrismaOrderAttachmentsRepository } from './prisma/repositories/prisma-o
     UsersRepository,
     RecipientsRepository,
     OrdersRepository,
+    OrderAttachmentsRepository,
   ],
 })
 export class DatabaseModule {}

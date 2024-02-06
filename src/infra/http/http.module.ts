@@ -23,6 +23,8 @@ import { GetUserInfoUseCase } from '@/domain/main/application/use-cases/get-user
 import { CreateOrderController } from './controllers/create-order.controller';
 import { CreateOrderUseCase } from '@/domain/main/application/use-cases/create-order';
 import { GetOrderInfoUseCase } from '@/domain/main/application/use-cases/get-order-info';
+import { EditOrderController } from './controllers/edit-order.controller';
+import { EditOrderUseCase } from '@/domain/main/application/use-cases/edit-order';
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -38,6 +40,7 @@ import { GetOrderInfoUseCase } from '@/domain/main/application/use-cases/get-ord
     GetUserInfoController,
     CreateOrderController,
     GetOrderInfoController,
+    EditOrderController,
   ],
   providers: [
     RegisterUserUseCase,
@@ -51,6 +54,7 @@ import { GetOrderInfoUseCase } from '@/domain/main/application/use-cases/get-ord
     GetUserInfoUseCase,
     CreateOrderUseCase,
     GetOrderInfoUseCase,
+    EditOrderUseCase,
   ],
 })
 export class HttpModule {}
