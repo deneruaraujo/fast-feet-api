@@ -1,3 +1,4 @@
+import { GetOrderInfoController } from './controllers/get-order-info.controller';
 import { GetRecipientInfoController } from './controllers/get-recipient-info.controller';
 import { Module } from '@nestjs/common';
 import { CryptographyModule } from '../cryptography/cryptography.module';
@@ -21,6 +22,7 @@ import { GetUserInfoController } from './controllers/get-user-info.controller';
 import { GetUserInfoUseCase } from '@/domain/main/application/use-cases/get-user-info';
 import { CreateOrderController } from './controllers/create-order.controller';
 import { CreateOrderUseCase } from '@/domain/main/application/use-cases/create-order';
+import { GetOrderInfoUseCase } from '@/domain/main/application/use-cases/get-order-info';
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -35,6 +37,7 @@ import { CreateOrderUseCase } from '@/domain/main/application/use-cases/create-o
     DeleteUserController,
     GetUserInfoController,
     CreateOrderController,
+    GetOrderInfoController,
   ],
   providers: [
     RegisterUserUseCase,
@@ -47,6 +50,7 @@ import { CreateOrderUseCase } from '@/domain/main/application/use-cases/create-o
     DeleteUserUseCase,
     GetUserInfoUseCase,
     CreateOrderUseCase,
+    GetOrderInfoUseCase,
   ],
 })
 export class HttpModule {}
