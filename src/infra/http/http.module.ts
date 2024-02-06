@@ -25,6 +25,8 @@ import { CreateOrderUseCase } from '@/domain/main/application/use-cases/create-o
 import { GetOrderInfoUseCase } from '@/domain/main/application/use-cases/get-order-info';
 import { EditOrderController } from './controllers/edit-order.controller';
 import { EditOrderUseCase } from '@/domain/main/application/use-cases/edit-order';
+import { DeleteOrderController } from './controllers/delete-order.controller';
+import { DeleteOrderUseCase } from '@/domain/main/application/use-cases/delete-order';
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -41,6 +43,7 @@ import { EditOrderUseCase } from '@/domain/main/application/use-cases/edit-order
     CreateOrderController,
     GetOrderInfoController,
     EditOrderController,
+    DeleteOrderController,
   ],
   providers: [
     RegisterUserUseCase,
@@ -55,6 +58,7 @@ import { EditOrderUseCase } from '@/domain/main/application/use-cases/edit-order
     CreateOrderUseCase,
     GetOrderInfoUseCase,
     EditOrderUseCase,
+    DeleteOrderUseCase,
   ],
 })
 export class HttpModule {}
