@@ -29,6 +29,8 @@ import { DeleteOrderController } from './controllers/delete-order.controller';
 import { DeleteOrderUseCase } from '@/domain/main/application/use-cases/delete-order';
 import { FetchUserDeliveriesController } from './controllers/fetch-user-deliveries.controller';
 import { FetchUserDeliveriesUseCase } from '@/domain/main/application/use-cases/fetch-user-deliveries';
+import { FetchNearbyOrdersController } from './controllers/fetch-nearby-orders.controller';
+import { FetchNearbyOrdersUseCase } from '@/domain/main/application/use-cases/fetch-nearby-orders';
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -47,6 +49,7 @@ import { FetchUserDeliveriesUseCase } from '@/domain/main/application/use-cases/
     EditOrderController,
     DeleteOrderController,
     FetchUserDeliveriesController,
+    FetchNearbyOrdersController,
   ],
   providers: [
     RegisterUserUseCase,
@@ -63,6 +66,7 @@ import { FetchUserDeliveriesUseCase } from '@/domain/main/application/use-cases/
     EditOrderUseCase,
     DeleteOrderUseCase,
     FetchUserDeliveriesUseCase,
+    FetchNearbyOrdersUseCase,
   ],
 })
 export class HttpModule {}

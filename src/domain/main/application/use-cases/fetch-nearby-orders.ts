@@ -38,8 +38,6 @@ export class FetchNearbyOrdersUseCase {
       return left(null);
     }
 
-    return right({
-      orders,
-    });
+    return right({ orders });
   }
 }

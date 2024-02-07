@@ -30,7 +30,7 @@ model User {
 
 model Recipient {
   id        String  @id @default(uuid())
-  userId    String  @map("user_id")
+  userId    String
   name      String
   state     String
   city      String
@@ -47,7 +47,7 @@ model Recipient {
 
 model Order {
   id                   String    @id @default(uuid())
-  userId               String    @map("user_id")
+  userId               String
   name                 String
   isAvailableForPickup Boolean   @map("is_available_for_pickup")
   hasBeenPickedUp      Boolean   @map("has_been_picked_up")

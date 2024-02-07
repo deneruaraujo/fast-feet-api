@@ -55,10 +55,18 @@ export class PrismaOrdersRepository implements OrdersRepository {
     paginationParams: PaginationParams,
   ): Promise<Order[]> {
     const orders = await this.prisma.$queryRaw<Order[]>`
-    SELECT * from orders
-    WHERE ( 6371 * acos( cos( radians(${params.latitude}) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(${params.longitude}) ) + sin( radians(${params.latitude}) ) * sin( radians( latitude ) ) ) ) <= 10
+    SELECT DISTINCT o.*
+    FROM "orders" o
+    JOIN "recipients" r ON o."userId" = r."userId"
+    WHERE ( 6371 * acos(
+      cos( radians(${params.latitude}) ) *
+      cos( radians( r.latitude ) ) *
+      cos( radians( r.longitude ) - radians(${params.longitude}) ) +
+      sin( radians(${params.latitude}) ) *
+      sin( radians( r.latitude ) )
+    ) ) <= 10
     LIMIT 20 OFFSET ${(paginationParams.page - 1) * 20}
-    `;
+  `;
 
     return orders;
   }
